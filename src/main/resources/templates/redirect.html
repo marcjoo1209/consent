@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>법무법인 태성 - 페이지 이동 중</title>
+    <link rel="icon" type="image/svg+xml" th:href="@{/images/symbol.svg}" />
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  </head>
+  <body>
+    <div>
+      <div>
+        <div>
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+
+          <h2>페이지 이동 안내</h2>
+
+          <p>법무법인 태성 홈페이지로 이동합니다.</p>
+
+          <p>
+            잠시 후 자동으로 이동하지 않는다면
+            <br />
+            아래 버튼을 클릭해주세요.
+          </p>
+        </div>
+
+        <div>
+          <a href="https://lawfirmts.com/">법무법인 태성 홈페이지로 이동</a>
+        </div>
+      </div>
+
+      <div>
+        <p>&copy; 2025 법무법인 태성. All rights reserved.</p>
+      </div>
+    </div>
+
+    <script>
+      // 3초 후 자동 리다이렉트
+      setTimeout(function () {
+        window.location.href = "https://lawfirmts.com/";
+      }, 3000);
+    </script>
+  </body>
+</html>

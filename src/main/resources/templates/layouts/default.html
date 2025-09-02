@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">아파트 동의서 관리 시스템</title>
+    <link rel="icon" type="image/svg+xml" th:href="@{/images/symbol.svg}" />
+
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+
+    <!-- Alpine.js for interactive components -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Main JavaScript -->
+    <script th:src="@{/js/main.js}" defer></script>
+
+    <!-- Additional CSS -->
+    <th:block layout:fragment="css"></th:block>
+  </head>
+
+  <body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- Header -->
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <!-- Main Content -->
+    <main class="flex-1">
+      <div layout:fragment="content">
+        <!-- Page content will be inserted here -->
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <div th:replace="~{fragments/footer :: footer}"></div>
+
+    <!-- Toast/Notification Container -->
+    <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
+
+    <!-- Common Scripts -->
+    <script>
+      // Toast notification function
+      function showToast(message, type = "info") {
+        const toast = document.createElement("div");
+        const bgColor = type === "success" ? "bg-green-500" : type === "error" ? "bg-red-500" : type === "warning" ? "bg-yellow-500" : "bg-blue-500";
+
+        toast.className = `${bgColor} text-white px-6 py-3 rounded-lg shadow-lg transform transition-all duration-300 translate-x-full`;
+        toast.textContent = message;
+
+        document.getElementById("toast-container").appendChild(toast);
+
+        setTimeout(() => {
+          toast.classList.remove("translate-x-full");
+        }, 100);
+
+        setTimeout(() => {
+          toast.classList.add("translate-x-full");
+          setTimeout(() => toast.remove(), 300);
+        }, 3000);
+      }
+    </script>
+
+    <!-- Additional Scripts -->
+    <th:block layout:fragment="script"></th:block>
+  </body>
+</html>
