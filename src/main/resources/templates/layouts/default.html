@@ -19,12 +19,12 @@
     <th:block layout:fragment="css"></th:block>
   </head>
 
-  <body class="bg-gray-50 min-h-screen flex flex-col">
+  <body>
     <!-- Header -->
     <div th:replace="~{fragments/header :: header}"></div>
 
     <!-- Main Content -->
-    <main class="flex-1">
+    <main>
       <div layout:fragment="content">
         <!-- Page content will be inserted here -->
       </div>
@@ -34,7 +34,7 @@
     <div th:replace="~{fragments/footer :: footer}"></div>
 
     <!-- Toast/Notification Container -->
-    <div id="toast-container" class="fixed top-4 right-4 z-50 space-y-2"></div>
+    <div id="toast-container"></div>
 
     <!-- Common Scripts -->
     <script>
@@ -43,17 +43,17 @@
         const toast = document.createElement("div");
         const bgColor = type === "success" ? "bg-green-500" : type === "error" ? "bg-red-500" : type === "warning" ? "bg-yellow-500" : "bg-blue-500";
 
-        toast.className = `${bgColor} text-white px-6 py-3 rounded-lg shadow-lg transform transition-all duration-300 translate-x-full`;
+        toast.className = bgColor;
         toast.textContent = message;
 
         document.getElementById("toast-container").appendChild(toast);
 
         setTimeout(() => {
-          toast.classList.remove("translate-x-full");
+          // Animation removed
         }, 100);
 
         setTimeout(() => {
-          toast.classList.add("translate-x-full");
+          // Animation removed
           setTimeout(() => toast.remove(), 300);
         }, 3000);
       }
