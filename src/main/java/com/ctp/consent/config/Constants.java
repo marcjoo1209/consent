@@ -50,7 +50,7 @@ public final class Constants {
     }
 
     public static final class Url {
-        public static final String ADMIN = "/admin/**";
+        public static final String ADMIN_URL = "/admin/**";
         public static final String ADMIN_API = "/api/admin/**";
         public static final String ADMIN_LOGIN = "/admin/login";
         public static final String ADMIN_LOGOUT = "/admin/logout";
@@ -64,9 +64,12 @@ public final class Constants {
         public static final String[] ALLOW_STATIC = {
                 "/css/**",
                 "/js/**",
-                "/images/**",
+                "/dist/**",
+                "/resource/**",
+                "/image/**",
                 "/favicon.ico",
-                "/error"
+                "/error",
+                "/component/**"
         };
     }
 }

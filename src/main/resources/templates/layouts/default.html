@@ -4,16 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">아파트 동의서 관리 시스템</title>
-    <link rel="icon" type="image/svg+xml" th:href="@{/images/symbol.svg}" />
-
+    <link rel="icon" type="image/svg+xml" th:href="@{/resource/image/symbol.svg}" />
+    <link rel="stylesheet" th:href="@{/dist/css/output.css}" />
     <!-- Tailwind CSS -->
-    <link rel="stylesheet" th:href="@{/css/styles.css}" />
-
-    <!-- Alpine.js for interactive components -->
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" th:href="@{/dist/css/output.css}" />
 
     <!-- Main JavaScript -->
-    <script th:src="@{/js/main.js}" defer></script>
+    <script th:src="@{/dist/js/main.bundle.js}"></script>
 
     <!-- Additional CSS -->
     <th:block layout:fragment="css"></th:block>

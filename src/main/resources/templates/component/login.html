@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로그인 템플릿</title>
+    <link rel="stylesheet" href="/dist/css/output.css" />
+  </head>
+  <body class="bg-gray-50">
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+      <!-- Back Button -->
+      <a href="/component" class="inline-flex items-center text-blue-600 hover:text-blue-800 mb-8">
+        <i class="fas fa-arrow-left mr-2"></i>
+        컴포넌트 라이브러리로 돌아가기
+      </a>
+
+      <h1 class="text-4xl font-bold text-gray-900 mb-8">로그인 페이지 템플릿</h1>
+
+      <!-- Simple Login -->
+      <section class="mb-16">
+        <h2 class="text-2xl font-semibold mb-6 text-gray-800">심플 로그인</h2>
+        <div class="bg-white rounded-lg shadow-lg p-8">
+          <div class="max-w-md mx-auto">
+            <div class="text-center mb-8">
+              <h3 class="text-2xl font-bold text-gray-900">Welcome Back</h3>
+              <p class="text-gray-600 mt-2">Please sign in to your account</p>
+            </div>
+            <form class="space-y-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                <input type="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="you@example.com" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                <input type="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="••••••••" />
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                  <input type="checkbox" id="remember1" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+                  <label for="remember1" class="ml-2 text-sm text-gray-700">Remember me</label>
+                </div>
+                <a href="#" class="text-sm text-blue-600 hover:text-blue-800">Forgot password?</a>
+              </div>
+              <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">Sign In</button>
+              <p class="text-center text-sm text-gray-600">
+                Don't have an account?
+                <a href="#" class="text-blue-600 hover:text-blue-800">Sign up</a>
+              </p>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- Split Screen Login -->
+      <section class="mb-16">
+        <h2 class="text-2xl font-semibold mb-6 text-gray-800">분할 화면 로그인</h2>
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+          <div class="flex flex-col md:flex-row">
+            <!-- Left Side - Image/Brand -->
+            <div class="md:w-1/2 bg-gradient-to-br from-blue-600 to-purple-700 p-12 text-white">
+              <div class="max-w-md">
+                <h2 class="text-3xl font-bold mb-4">Start your journey</h2>
+                <p class="text-blue-100 mb-8">Join thousands of users who are already enjoying our platform.</p>
+                <div class="space-y-4">
+                  <div class="flex items-center">
+                    <i class="fas fa-check-circle mr-3"></i>
+                    <span>Free forever plan available</span>
+                  </div>
+                  <div class="flex items-center">
+                    <i class="fas fa-check-circle mr-3"></i>
+                    <span>No credit card required</span>
+                  </div>
+                  <div class="flex items-center">
+                    <i class="fas fa-check-circle mr-3"></i>
+                    <span>Cancel anytime</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Side - Form -->
+            <div class="md:w-1/2 p-12">
+              <div class="max-w-md mx-auto">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Sign in to account</h3>
+                <form class="space-y-6">
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                    <input type="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                    <input type="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                  </div>
+                  <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">Sign In</button>
+                </form>
+
+                <div class="mt-6">
+                  <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                      <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                      <span class="px-2 bg-white text-gray-500">Or continue with</span>
+                    </div>
+                  </div>
+
+                  <div class="mt-6 grid grid-cols-2 gap-3">
+                    <button class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                      <i class="fab fa-google text-red-500 mr-2"></i>
+                      Google
+                    </button>
+                    <button class="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50">
+                      <i class="fab fa-github mr-2"></i>
+                      GitHub
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Modern Floating Login -->
+      <section class="mb-16">
+        <h2 class="text-2xl font-semibold mb-6 text-gray-800">모던 플로팅 로그인</h2>
+        <div class="min-h-[600px] bg-gradient-to-br from-purple-600 via-blue-600 to-cyan-600 rounded-lg p-8 flex items-center justify-center">
+          <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 w-full max-w-md">
+            <div class="text-center mb-8">
+              <div class="w-20 h-20 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mx-auto mb-4 flex items-center justify-center">
+                <i class="fas fa-user text-white text-3xl"></i>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900">Login</h3>
+            </div>
+
+            <form class="space-y-6">
+              <div class="relative">
+                <input type="email" placeholder=" " class="peer w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" />
+                <label class="absolute left-4 top-3 text-gray-500 transition-all peer-placeholder-shown:top-3 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-purple-600 bg-white px-1">Email Address</label>
+              </div>
+
+              <div class="relative">
+                <input type="password" placeholder=" " class="peer w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" />
+                <label class="absolute left-4 top-3 text-gray-500 transition-all peer-placeholder-shown:top-3 peer-focus:-top-6 peer-focus:text-sm peer-focus:text-purple-600 bg-white px-1">Password</label>
+              </div>
+
+              <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-3 rounded-lg hover:from-purple-700 hover:to-blue-700 transition">Sign In</button>
+            </form>
+
+            <div class="mt-6 text-center">
+              <a href="#" class="text-sm text-gray-600 hover:text-purple-600">Forgot your password?</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Minimalist Login -->
+      <section class="mb-16">
+        <h2 class="text-2xl font-semibold mb-6 text-gray-800">미니멀리스트 로그인</h2>
+        <div class="bg-gray-100 rounded-lg p-8">
+          <div class="max-w-sm mx-auto bg-white rounded-xl shadow-sm p-8">
+            <h3 class="text-xl font-semibold text-gray-900 mb-6">Sign in</h3>
+            <form class="space-y-4">
+              <input type="email" placeholder="Email" class="w-full px-0 py-2 border-0 border-b-2 border-gray-200 focus:border-black focus:outline-none transition" />
+              <input type="password" placeholder="Password" class="w-full px-0 py-2 border-0 border-b-2 border-gray-200 focus:border-black focus:outline-none transition" />
+              <button type="submit" class="w-full bg-black text-white py-3 rounded-lg hover:bg-gray-800 transition">Continue</button>
+            </form>
+            <p class="text-center text-xs text-gray-500 mt-6">
+              By continuing, you agree to our
+              <a href="#" class="underline">Terms</a>
+              and
+              <a href="#" class="underline">Privacy Policy</a>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Social Login Focus -->
+      <section class="mb-16">
+        <h2 class="text-2xl font-semibold mb-6 text-gray-800">소셜 로그인 중심</h2>
+        <div class="bg-white rounded-lg shadow-lg p-8">
+          <div class="max-w-md mx-auto">
+            <div class="text-center mb-8">
+              <h3 class="text-3xl font-bold text-gray-900">Welcome</h3>
+              <p class="text-gray-600 mt-2">Choose your preferred sign-in method</p>
+            </div>
+
+            <div class="space-y-3">
+              <button class="w-full flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                <i class="fab fa-google text-red-500 mr-3 text-xl"></i>
+                <span class="font-medium">Continue with Google</span>
+              </button>
+
+              <button class="w-full flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                <i class="fab fa-facebook text-blue-600 mr-3 text-xl"></i>
+                <span class="font-medium">Continue with Facebook</span>
+              </button>
+
+              <button class="w-full flex items-center justify-center px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition">
+                <i class="fab fa-apple text-black mr-3 text-xl"></i>
+                <span class="font-medium">Continue with Apple</span>
+              </button>
+
+              <button class="w-full flex items-center justify-center px-4 py-3 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition">
+                <i class="fab fa-github mr-3 text-xl"></i>
+                <span class="font-medium">Continue with GitHub</span>
+              </button>
+            </div>
+
+            <div class="relative my-6">
+              <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-gray-300"></div>
+              </div>
+              <div class="relative flex justify-center text-sm">
+                <span class="px-4 bg-white text-gray-500">or</span>
+              </div>
+            </div>
+
+            <form class="space-y-4">
+              <input type="email" placeholder="Email address" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">Continue with Email</button>
+            </form>
+
+            <p class="text-center text-sm text-gray-600 mt-6">
+              Don't have an account?
+              <a href="#" class="text-blue-600 hover:text-blue-800 font-medium">Sign up</a>
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+    <script src="/js/main.bundle.js"></script>
+  </body>
+</html>

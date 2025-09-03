@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Component Library</title>
+    <link rel="stylesheet" href="/dist/css/output.css" />
+  </head>
+  <body class="bg-gray-50">
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+      <header class="mb-12">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">컴포넌트 라이브러리</h1>
+        <p class="text-lg text-gray-600">Tailwind CSS 기반 UI 컴포넌트 모음</p>
+      </header>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Basic Components -->
+        <a href="/component/basic" class="group">
+          <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6">
+            <div class="flex items-center mb-4">
+              <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center">
+                <i class="fas fa-cube text-white text-xl"></i>
+              </div>
+              <h2 class="text-xl font-semibold ml-4">기본 컴포넌트</h2>
+            </div>
+            <p class="text-gray-600">Header, Footer, Input, Button 등 기본 UI 컴포넌트</p>
+            <div class="mt-4 text-blue-500 group-hover:text-blue-600">컴포넌트 보기 →</div>
+          </div>
+        </a>
+
+        <!-- Template Components -->
+        <a href="/component/templates" class="group">
+          <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6">
+            <div class="flex items-center mb-4">
+              <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
+                <i class="fas fa-layer-group text-white text-xl"></i>
+              </div>
+              <h2 class="text-xl font-semibold ml-4">템플릿 컴포넌트</h2>
+            </div>
+            <p class="text-gray-600">Card, Login, Dashboard 등 즉시 사용 가능한 템플릿</p>
+            <div class="mt-4 text-green-500 group-hover:text-green-600">템플릿 보기 →</div>
+          </div>
+        </a>
+
+        <!-- Card Demo -->
+        <a href="/component/card" class="group">
+          <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6">
+            <div class="flex items-center mb-4">
+              <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center">
+                <i class="fas fa-rectangle-list text-white text-xl"></i>
+              </div>
+              <h2 class="text-xl font-semibold ml-4">Card 컴포넌트</h2>
+            </div>
+            <p class="text-gray-600">다양한 스타일의 Card 컴포넌트 예제</p>
+            <div class="mt-4 text-purple-500 group-hover:text-purple-600">데모 보기 →</div>
+          </div>
+        </a>
+
+        <!-- Login Demo -->
+        <a href="/component/login" class="group">
+          <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6">
+            <div class="flex items-center mb-4">
+              <div class="w-12 h-12 bg-indigo-500 rounded-lg flex items-center justify-center">
+                <i class="fas fa-user-lock text-white text-xl"></i>
+              </div>
+              <h2 class="text-xl font-semibold ml-4">로그인 페이지</h2>
+            </div>
+            <p class="text-gray-600">로그인 페이지 템플릿 예제</p>
+            <div class="mt-4 text-indigo-500 group-hover:text-indigo-600">데모 보기 →</div>
+          </div>
+        </a>
+
+        <!-- Dashboard Demo -->
+        <a href="/component/dashboard" class="group">
+          <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow p-6">
+            <div class="flex items-center mb-4">
+              <div class="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center">
+                <i class="fas fa-chart-line text-white text-xl"></i>
+              </div>
+              <h2 class="text-xl font-semibold ml-4">대시보드</h2>
+            </div>
+            <p class="text-gray-600">관리자 대시보드 템플릿 예제</p>
+            <div class="mt-4 text-red-500 group-hover:text-red-600">데모 보기 →</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <script src="/js/main.bundle.js"></script>
+  </body>
+</html>

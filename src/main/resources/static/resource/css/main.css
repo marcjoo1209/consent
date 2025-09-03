@@ -1,0 +1,40 @@
+@import "tailwindcss";
+@import "@fortawesome/fontawesome-free/css/all.css";
+
+/* Custom styles */
+@layer components {
+  .bg-login {
+    background-image: url("../image/bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+
+/* Remove default outline and prevent double borders on form elements */
+@layer base {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="tel"],
+  input[type="search"],
+  input[type="url"],
+  input[type="date"],
+  input[type="datetime-local"],
+  input[type="month"],
+  input[type="time"],
+  input[type="week"],
+  textarea,
+  select {
+    @apply outline-none focus:outline-none;
+  }
+  
+  /* Prevent browser's default focus styles */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none !important;
+    outline-offset: 0 !important;
+  }
+}

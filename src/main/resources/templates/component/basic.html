@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>기본 컴포넌트</title>
+    <link rel="stylesheet" href="/dist/css/output.css" />
+  </head>
+  <body class="bg-gray-50">
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+      <!-- Back Button -->
+      <a href="/component" class="inline-flex items-center text-blue-600 hover:text-blue-800 mb-8">
+        <i class="fas fa-arrow-left mr-2"></i>
+        컴포넌트 라이브러리로 돌아가기
+      </a>
+
+      <h1 class="text-4xl font-bold text-gray-900 mb-8">기본 컴포넌트</h1>
+
+      <!-- Header Components -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-6 text-gray-800">헤더</h2>
+
+        <!-- Simple Header -->
+        <div class="mb-8 border rounded-lg overflow-hidden">
+          <header class="bg-white shadow">
+            <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center">
+                  <span class="text-xl font-bold text-gray-900">Logo</span>
+                </div>
+                <div class="hidden md:block">
+                  <div class="ml-10 flex items-baseline space-x-4">
+                    <a href="#" class="text-gray-700 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">홈</a>
+                    <a href="#" class="text-gray-700 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">소개</a>
+                    <a href="#" class="text-gray-700 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">서비스</a>
+                    <a href="#" class="text-gray-700 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">문의</a>
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </header>
+        </div>
+
+        <!-- Header with CTA -->
+        <div class="mb-8 border rounded-lg overflow-hidden">
+          <header class="bg-gradient-to-r from-blue-600 to-indigo-700">
+            <nav class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center">
+                  <span class="text-xl font-bold text-white">Brand</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                  <a href="#" class="text-white/90 hover:text-white px-3 py-2 text-sm font-medium">기능</a>
+                  <a href="#" class="text-white/90 hover:text-white px-3 py-2 text-sm font-medium">가격</a>
+                  <button class="bg-white text-blue-600 px-4 py-2 rounded-lg font-medium hover:bg-gray-100">시작하기</button>
+                </div>
+              </div>
+            </nav>
+          </header>
+        </div>
+      </section>
+
+      <!-- Button Components -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-6 text-gray-800">버튼</h2>
+        <div class="space-y-4">
+          <!-- Primary Buttons -->
+          <div class="flex flex-wrap gap-3">
+            <button class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">기본</button>
+            <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">성공</button>
+            <button class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition">위험</button>
+            <button class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition">경고</button>
+            <button class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition">보조</button>
+          </div>
+
+          <!-- Outlined Buttons -->
+          <div class="flex flex-wrap gap-3">
+            <button class="px-4 py-2 border-2 border-blue-600 text-blue-600 rounded hover:bg-blue-50 transition">외곽선 기본</button>
+            <button class="px-4 py-2 border-2 border-green-600 text-green-600 rounded hover:bg-green-50 transition">외곽선 성공</button>
+            <button class="px-4 py-2 border-2 border-red-600 text-red-600 rounded hover:bg-red-50 transition">외곽선 위험</button>
+          </div>
+
+          <!-- Icon Buttons -->
+          <div class="flex flex-wrap gap-3">
+            <button class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition flex items-center">
+              <i class="fas fa-download mr-2"></i>
+              다운로드
+            </button>
+            <button class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition flex items-center">
+              <i class="fas fa-check mr-2"></i>
+              확인
+            </button>
+            <button class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition flex items-center">
+              <i class="fas fa-trash mr-2"></i>
+              삭제
+            </button>
+          </div>
+
+          <!-- Size Variations -->
+          <div class="flex flex-wrap items-center gap-3">
+            <button class="px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">매우 작게</button>
+            <button class="px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700">작게</button>
+            <button class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">기본</button>
+            <button class="px-6 py-3 text-lg bg-blue-600 text-white rounded hover:bg-blue-700">크게</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Input Components -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-6 text-gray-800">입력 필드</h2>
+        <div class="max-w-2xl space-y-4">
+          <!-- Basic Input -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">기본 입력</label>
+            <input type="text" placeholder="텍스트를 입력하세요..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+          </div>
+
+          <!-- Input with Icon -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">이메일 입력</label>
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i class="fas fa-envelope text-gray-400"></i>
+              </div>
+              <input type="email" placeholder="your@email.com" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+            </div>
+          </div>
+
+          <!-- Search Input -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">검색</label>
+            <div class="relative">
+              <input type="search" placeholder="검색..." class="w-full pl-4 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              <button class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                <i class="fas fa-search text-gray-400"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Select -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">옵션 선택</label>
+            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+              <option>옵션 1</option>
+              <option>옵션 2</option>
+              <option>옵션 3</option>
+            </select>
+          </div>
+
+          <!-- Textarea -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">메시지</label>
+            <textarea rows="4" placeholder="메시지를 입력하세요..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
+          </div>
+
+          <!-- Checkbox and Radio -->
+          <div class="space-y-2">
+            <div class="flex items-center">
+              <input type="checkbox" id="check1" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" />
+              <label for="check1" class="ml-2 text-sm text-gray-700">체크박스 옵션</label>
+            </div>
+            <div class="flex items-center">
+              <input type="radio" name="radio" id="radio1" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" />
+              <label for="radio1" class="ml-2 text-sm text-gray-700">라디오 옵션 1</label>
+            </div>
+            <div class="flex items-center">
+              <input type="radio" name="radio" id="radio2" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" />
+              <label for="radio2" class="ml-2 text-sm text-gray-700">라디오 옵션 2</label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer Components -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold mb-6 text-gray-800">푸터</h2>
+
+        <!-- Simple Footer -->
+        <div class="border rounded-lg overflow-hidden mb-8">
+          <footer class="bg-gray-800 text-white">
+            <div class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+              <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                  <p class="text-sm">© 2024 회사명. 모든 권리 보유.</p>
+                </div>
+                <div class="flex space-x-6">
+                  <a href="#" class="text-gray-400 hover:text-white">개인정보처리방침</a>
+                  <a href="#" class="text-gray-400 hover:text-white">이용약관</a>
+                  <a href="#" class="text-gray-400 hover:text-white">문의하기</a>
+                </div>
+              </div>
+            </div>
+          </footer>
+        </div>
+
+        <!-- Footer with Columns -->
+        <div class="border rounded-lg overflow-hidden">
+          <footer class="bg-gray-900 text-white">
+            <div class="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+              <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                  <h3 class="text-lg font-semibold mb-4">회사</h3>
+                  <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-white">회사소개</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">채용</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">보도자료</a></li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 class="text-lg font-semibold mb-4">제품</h3>
+                  <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-white">기능</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">가격</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">보안</a></li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 class="text-lg font-semibold mb-4">자료</h3>
+                  <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-white">문서</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">블로그</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-white">지원</a></li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 class="text-lg font-semibold mb-4">연결</h3>
+                  <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white">
+                      <i class="fab fa-twitter text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                      <i class="fab fa-facebook text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                      <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white">
+                      <i class="fab fa-linkedin text-xl"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-8 pt-8 border-t border-gray-800">
+                <p class="text-center text-gray-400 text-sm">© 2024 회사명. 모든 권리 보유.</p>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </section>
+    </div>
+    <script src="/js/main.bundle.js"></script>
+  </body>
+</html>

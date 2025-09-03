@@ -67,7 +67,7 @@ public class SecurityConfig {
                     // 사용자 동의서 페이지 (인증 불필요)
                     .requestMatchers(Constants.Url.ALLOW_CONSENT).permitAll()
                     // 관리자 페이지 (인증 필요)
-                    .requestMatchers(Constants.Url.ADMIN).hasAnyRole(Constants.Role.ADMIN, Constants.Role.SUPER_ADMIN)
+                    .requestMatchers(Constants.Url.ADMIN_URL).hasAnyRole(Constants.Role.ADMIN, Constants.Role.SUPER_ADMIN)
                     // API 엔드포인트
                     .requestMatchers(Constants.Url.ADMIN_API).hasAnyRole(Constants.Role.ADMIN, Constants.Role.SUPER_ADMIN)
                     // 나머지 모든 요청은 인증 필요

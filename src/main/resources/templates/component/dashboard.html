@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>대시보드 템플릿</title>
+    <link rel="stylesheet" th:href="@{/dist/css/output.css}" />
+    <script th:src="@{/dist/js/main.bundle.js}"></script>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Back Button -->
+    <div class="container mx-auto px-4 py-4">
+      <a href="/component" class="inline-flex items-center text-blue-600 hover:text-blue-800">
+        <i class="fas fa-arrow-left mr-2"></i>
+        컴포넌트 라이브러리로 돌아가기
+      </a>
+    </div>
+
+    <!-- Dashboard 1: Classic Admin Dashboard -->
+    <section class="mb-16">
+      <div class="container mx-auto px-4">
+        <h2 class="text-2xl font-semibold mb-6 text-gray-800">Classic Admin Dashboard</h2>
+      </div>
+
+      <div class="flex h-screen bg-gray-100">
+        <!-- Sidebar -->
+        <div class="w-64 bg-gray-900 text-white">
+          <div class="p-4">
+            <h1 class="text-2xl font-bold">Admin Panel</h1>
+          </div>
+          <nav class="mt-8">
+            <a href="#" class="block px-4 py-2 bg-gray-800 border-l-4 border-blue-500">
+              <i class="fas fa-home mr-3"></i>
+              Dashboard
+            </a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-800">
+              <i class="fas fa-users mr-3"></i>
+              Users
+            </a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-800">
+              <i class="fas fa-chart-bar mr-3"></i>
+              Analytics
+            </a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-800">
+              <i class="fas fa-shopping-cart mr-3"></i>
+              Orders
+            </a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-800">
+              <i class="fas fa-box mr-3"></i>
+              Products
+            </a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-800">
+              <i class="fas fa-cog mr-3"></i>
+              Settings
+            </a>
+          </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 overflow-auto">
+          <!-- Top Bar -->
+          <header class="bg-white shadow-sm">
+            <div class="flex items-center justify-between px-6 py-4">
+              <h2 class="text-xl font-semibold text-gray-800">Dashboard Overview</h2>
+              <div class="flex items-center space-x-4">
+                <button class="relative">
+                  <i class="fas fa-bell text-gray-600"></i>
+                  <span class="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+                <div class="flex items-center space-x-2">
+                  <div class="w-8 h-8 bg-gray-300 rounded-full"></div>
+                  <span class="text-sm font-medium">John Doe</span>
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <!-- Dashboard Content -->
+          <div class="p-6">
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+              <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-gray-500 text-sm">Total Revenue</p>
+                    <p class="text-2xl font-bold">$24,563</p>
+                    <p class="text-green-500 text-sm mt-1">↑ 12% from last month</p>
+                  </div>
+                  <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-dollar-sign text-blue-600"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-gray-500 text-sm">New Users</p>
+                    <p class="text-2xl font-bold">1,234</p>
+                    <p class="text-green-500 text-sm mt-1">↑ 8% from last month</p>
+                  </div>
+                  <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-users text-green-600"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-gray-500 text-sm">Total Orders</p>
+                    <p class="text-2xl font-bold">456</p>
+                    <p class="text-red-500 text-sm mt-1">↓ 3% from last month</p>
+                  </div>
+                  <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-shopping-cart text-purple-600"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-gray-500 text-sm">Conversion Rate</p>
+                    <p class="text-2xl font-bold">3.2%</p>
+                    <p class="text-green-500 text-sm mt-1">↑ 1.2% from last month</p>
+                  </div>
+                  <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-chart-line text-orange-600"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+              <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold mb-4">Sales Overview</h3>
+                <canvas id="salesChart" width="400" height="200"></canvas>
+              </div>
+
+              <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold mb-4">Traffic Sources</h3>
+                <canvas id="trafficChart" width="400" height="200"></canvas>
+              </div>
+            </div>
+
+            <!-- Recent Orders Table -->
+            <div class="bg-white rounded-lg shadow">
+              <div class="px-6 py-4 border-b">
+                <h3 class="text-lg font-semibold">Recent Orders</h3>
+              </div>
+              <table class="w-full">
+                <thead>
+                  <tr class="text-left text-sm text-gray-500 border-b">
+                    <th class="px-6 py-3">Order ID</th>
+                    <th class="px-6 py-3">Customer</th>
+                    <th class="px-6 py-3">Product</th>
+                    <th class="px-6 py-3">Amount</th>
+                    <th class="px-6 py-3">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="border-b">
+                    <td class="px-6 py-4">#12345</td>
+                    <td class="px-6 py-4">John Smith</td>
+                    <td class="px-6 py-4">Product A</td>
+                    <td class="px-6 py-4">$125.00</td>
+                    <td class="px-6 py-4">
+                      <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">Completed</span>
+                    </td>
+                  </tr>
+                  <tr class="border-b">
+                    <td class="px-6 py-4">#12346</td>
+                    <td class="px-6 py-4">Jane Doe</td>
+                    <td class="px-6 py-4">Product B</td>
+                    <td class="px-6 py-4">$89.00</td>
+                    <td class="px-6 py-4">
+                      <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">Pending</span>
+                    </td>
+                  </tr>
+                  <tr class="border-b">
+                    <td class="px-6 py-4">#12347</td>
+                    <td class="px-6 py-4">Mike Johnson</td>
+                    <td class="px-6 py-4">Product C</td>
+                    <td class="px-6 py-4">$234.00</td>
+                    <td class="px-6 py-4">
+                      <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs">Processing</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard 2: Modern Analytics Dashboard -->
+    <section class="mb-16 container mx-auto px-4">
+      <h2 class="text-2xl font-semibold mb-6 text-gray-800">Modern Analytics Dashboard</h2>
+
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900">Analytics Dashboard</h1>
+            <p class="text-gray-600">Welcome back, here's what's happening</p>
+          </div>
+          <div class="flex space-x-3">
+            <button class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
+              <i class="fas fa-download mr-2"></i>
+              Export
+            </button>
+            <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+              <i class="fas fa-plus mr-2"></i>
+              Add Widget
+            </button>
+          </div>
+        </div>
+
+        <!-- Date Range Selector -->
+        <div class="flex items-center space-x-4 mb-6">
+          <button class="px-3 py-1 text-sm bg-gray-100 rounded-lg">Today</button>
+          <button class="px-3 py-1 text-sm text-gray-600 hover:bg-gray-100 rounded-lg">7 Days</button>
+          <button class="px-3 py-1 text-sm text-gray-600 hover:bg-gray-100 rounded-lg">30 Days</button>
+          <button class="px-3 py-1 text-sm text-gray-600 hover:bg-gray-100 rounded-lg">Custom</button>
+        </div>
+
+        <!-- Metric Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg p-6 text-white">
+            <div class="flex items-center justify-between mb-4">
+              <p class="text-blue-100">Total Visitors</p>
+              <i class="fas fa-eye text-2xl text-blue-200"></i>
+            </div>
+            <p class="text-3xl font-bold">54,234</p>
+            <div class="mt-4 flex items-center">
+              <div class="flex-1 bg-blue-400 rounded-full h-2">
+                <div class="bg-white rounded-full h-2" style="width: 67%"></div>
+              </div>
+              <span class="ml-3 text-sm">67%</span>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-lg p-6 text-white">
+            <div class="flex items-center justify-between mb-4">
+              <p class="text-green-100">Conversion Rate</p>
+              <i class="fas fa-chart-line text-2xl text-green-200"></i>
+            </div>
+            <p class="text-3xl font-bold">12.5%</p>
+            <div class="mt-4 flex items-center text-sm">
+              <i class="fas fa-arrow-up mr-1"></i>
+              <span>2.4% vs last period</span>
+            </div>
+          </div>
+
+          <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg p-6 text-white">
+            <div class="flex items-center justify-between mb-4">
+              <p class="text-purple-100">Avg. Session</p>
+              <i class="fas fa-clock text-2xl text-purple-200"></i>
+            </div>
+            <p class="text-3xl font-bold">3m 42s</p>
+            <div class="mt-4 flex items-center text-sm">
+              <i class="fas fa-arrow-down mr-1"></i>
+              <span>15s vs last period</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity Feed -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 bg-gray-50 rounded-lg p-6">
+            <h3 class="text-lg font-semibold mb-4">Traffic Overview</h3>
+            <canvas id="trafficOverview" height="100"></canvas>
+          </div>
+
+          <div class="bg-gray-50 rounded-lg p-6">
+            <h3 class="text-lg font-semibold mb-4">Recent Activity</h3>
+            <div class="space-y-4">
+              <div class="flex items-start">
+                <div class="w-2 h-2 bg-blue-500 rounded-full mt-1.5 mr-3"></div>
+                <div class="flex-1">
+                  <p class="text-sm font-medium">New user registered</p>
+                  <p class="text-xs text-gray-500">2 minutes ago</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="w-2 h-2 bg-green-500 rounded-full mt-1.5 mr-3"></div>
+                <div class="flex-1">
+                  <p class="text-sm font-medium">Payment received</p>
+                  <p class="text-xs text-gray-500">15 minutes ago</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="w-2 h-2 bg-purple-500 rounded-full mt-1.5 mr-3"></div>
+                <div class="flex-1">
+                  <p class="text-sm font-medium">New comment posted</p>
+                  <p class="text-xs text-gray-500">1 hour ago</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <div class="w-2 h-2 bg-orange-500 rounded-full mt-1.5 mr-3"></div>
+                <div class="flex-1">
+                  <p class="text-sm font-medium">Server backup completed</p>
+                  <p class="text-xs text-gray-500">2 hours ago</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard 3: Minimalist Dashboard -->
+    <section class="container mx-auto px-4 mb-16">
+      <h2 class="text-2xl font-semibold mb-6 text-gray-800">Minimalist Dashboard</h2>
+
+      <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+        <!-- Navigation -->
+        <div class="border-b border-gray-200">
+          <nav class="flex space-x-8 px-6">
+            <a href="#" class="py-4 border-b-2 border-black font-medium">Overview</a>
+            <a href="#" class="py-4 text-gray-500 hover:text-gray-700">Analytics</a>
+            <a href="#" class="py-4 text-gray-500 hover:text-gray-700">Reports</a>
+            <a href="#" class="py-4 text-gray-500 hover:text-gray-700">Settings</a>
+          </nav>
+        </div>
+
+        <div class="p-6">
+          <!-- Simple Stats -->
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div>
+              <p class="text-sm text-gray-500 mb-1">Revenue</p>
+              <p class="text-2xl font-semibold">$45,231</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500 mb-1">Orders</p>
+              <p class="text-2xl font-semibold">126</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500 mb-1">Customers</p>
+              <p class="text-2xl font-semibold">1,543</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500 mb-1">Growth</p>
+              <p class="text-2xl font-semibold">+12.5%</p>
+            </div>
+          </div>
+
+          <!-- Simple Table -->
+          <div>
+            <h3 class="font-semibold mb-4">Recent Transactions</h3>
+            <table class="w-full">
+              <thead>
+                <tr class="text-left text-sm text-gray-500 border-b">
+                  <th class="pb-3">Date</th>
+                  <th class="pb-3">Description</th>
+                  <th class="pb-3">Amount</th>
+                  <th class="pb-3">Status</th>
+                </tr>
+              </thead>
+              <tbody class="text-sm">
+                <tr class="border-b">
+                  <td class="py-3">Dec 23, 2024</td>
+                  <td class="py-3">Payment from John Doe</td>
+                  <td class="py-3">$250.00</td>
+                  <td class="py-3 text-green-600">Completed</td>
+                </tr>
+                <tr class="border-b">
+                  <td class="py-3">Dec 22, 2024</td>
+                  <td class="py-3">Payment to Vendor X</td>
+                  <td class="py-3">-$1,200.00</td>
+                  <td class="py-3 text-gray-600">Processing</td>
+                </tr>
+                <tr class="border-b">
+                  <td class="py-3">Dec 21, 2024</td>
+                  <td class="py-3">Subscription renewal</td>
+                  <td class="py-3">$99.00</td>
+                  <td class="py-3 text-green-600">Completed</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
