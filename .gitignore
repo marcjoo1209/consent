@@ -62,9 +62,4 @@ temp/
 node_modules/
 .claude/
 .mcp.json
-CLAUDE.md
-ASIS.md
-DB_ANALYSIS.md
-DEVELOPMENT_CHECKLIST.md
-PRD.md
 .env
