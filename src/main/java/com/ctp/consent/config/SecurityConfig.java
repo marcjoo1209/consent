@@ -20,8 +20,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.ctp.consent.api.v1.service.CustomUserDetailsService;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -30,12 +28,12 @@ import org.springframework.beans.factory.annotation.Value;
 @EnableMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
-    
+
     private final CustomUserDetailsService customUserDetailsService;
-    
+
     @Value("${app.security.remember-me.key:mySecretRememberMeKey}")
     private String rememberMeKey;
-    
+
     @Value("${app.security.remember-me.validity:1209600}")
     private int rememberMeValidity;
 
@@ -67,9 +65,11 @@ public class SecurityConfig {
                     // 사용자 동의서 페이지 (인증 불필요)
                     .requestMatchers(Constants.Url.ALLOW_CONSENT).permitAll()
                     // 관리자 페이지 (인증 필요)
-                    .requestMatchers(Constants.Url.ADMIN_URL).hasAnyRole(Constants.Role.ADMIN, Constants.Role.SUPER_ADMIN)
+                    .requestMatchers(Constants.Url.ADMIN_URL)
+                    .hasAnyRole(Constants.Role.ADMIN, Constants.Role.SUPER_ADMIN)
                     // API 엔드포인트
-                    .requestMatchers(Constants.Url.ADMIN_API).hasAnyRole(Constants.Role.ADMIN, Constants.Role.SUPER_ADMIN)
+                    .requestMatchers(Constants.Url.ADMIN_API)
+                    .hasAnyRole(Constants.Role.ADMIN, Constants.Role.SUPER_ADMIN)
                     // 나머지 모든 요청은 인증 필요
                     .anyRequest().authenticated())
             // 로그인 설정
@@ -100,7 +100,7 @@ public class SecurityConfig {
                     .sessionFixation().migrateSession()
                     .maximumSessions(1)
                     .maxSessionsPreventsLogin(true)
-                    .expiredUrl(Constants.Url.ADMIN_LOGIN+"?expired"))
+                    .expiredUrl(Constants.Url.ADMIN_LOGIN + "?expired"))
             // 예외 처리
             .exceptionHandling(exception -> exception
                     .authenticationEntryPoint((request, response, authException) -> {
@@ -140,6 +140,7 @@ public class SecurityConfig {
             response.sendRedirect(Constants.Url.ADMIN_LOGIN + "?logout=true");
         };
     }
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();

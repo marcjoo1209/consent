@@ -1,4 +1,4 @@
-package com.ctp.consent.api.v1.service;
+package com.ctp.consent.config;
 
 import com.ctp.consent.api.v1.dto.model.Admin;
 import com.ctp.consent.api.v1.repository.AdminRepository;
@@ -15,18 +15,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
-    
+
     private final AdminRepository adminRepository;
-    
+
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Admin admin = adminRepository.findByUsernameAndActiveTrue(username)
-            .orElseThrow(() -> {
-                log.warn("로그인 실패 - 사용자를 찾을 수 없음: {}", username);
-                return new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + username);
-            });
-        
+                .orElseThrow(() -> {
+                    log.warn("로그인 실패 - 사용자를 찾을 수 없음: {}", username);
+                    return new UsernameNotFoundException("사용자를 찾을 수 없습니다: " + username);
+                });
+
         log.info("로그인 시도 - 사용자: {}", username);
         return new CustomUserDetails(admin);
     }

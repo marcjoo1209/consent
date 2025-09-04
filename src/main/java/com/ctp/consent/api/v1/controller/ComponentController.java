@@ -13,27 +13,27 @@ public class ComponentController {
     public String index() {
         return "component/index";
     }
-    
+
     @GetMapping("/basic")
     public String basicComponents(Model model) {
         return "component/basic";
     }
-    
+
     @GetMapping("/templates")
     public String templateComponents(Model model) {
         return "component/templates";
     }
-    
+
     @GetMapping("/card")
     public String cardDemo() {
         return "component/card";
     }
-    
+
     @GetMapping("/login")
     public String loginDemo() {
         return "component/login";
     }
-    
+
     @GetMapping("/dashboard")
     public String dashboardDemo() {
         return "component/dashboard";

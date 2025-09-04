@@ -13,55 +13,50 @@ import java.util.Collections;
 @Getter
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
-    
+
     private final Admin admin;
-    
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(
-            new SimpleGrantedAuthority("ROLE_" + admin.getRole().name())
-        );
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + admin.getRole().name()));
     }
-    
+
     @Override
     public String getPassword() {
         return admin.getPassword();
     }
-    
+
     @Override
     public String getUsername() {
         return admin.getUsername();
     }
-    
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
-    
+
     @Override
     public boolean isAccountNonLocked() {
         return admin.getActive();
     }
-    
+
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
-    
+
     @Override
     public boolean isEnabled() {
         return admin.getActive();
     }
-    
+
     public Long getId() {
         return admin.getId();
     }
-    
+
     public String getName() {
         return admin.getName();
     }
-    
-    public String getEmail() {
-        return admin.getEmail();
-    }
+
 }

@@ -80,47 +80,48 @@
 
 ### 🗄️ 1.7 데이터베이스 스키마 및 기본 데이터
 
-- [ ] 새 데이터베이스(CTP) DDL 스크립트 생성
-  - [ ] administrators 테이블
-  - [ ] apartments 테이블
-  - [ ] consent_forms 테이블
-  - [ ] consent_records 테이블
-  - [ ] personal_info 테이블
-  - [ ] addresses 테이블
-  - [ ] attachments 테이블
-  - [ ] signatures 테이블
-  - [ ] consent_history 테이블
-- [ ] 기존 데이터 연동 View 생성 (legacy_consent_mapping)
-- [ ] 기본 데이터 Insert 스크립트 생성
-  - [ ] 기본 관리자 계정 (Super Admin)
-  - [ ] 기본 동의서 양식 데이터
-  - [ ] 테스트용 아파트 데이터
+- [x] 새 데이터베이스(CTP) DDL 스크립트 생성
+  - [x] administrators 테이블 (Admin 엔티티)
+  - [x] apartments 테이블
+  - [x] consent_form_templates 테이블
+  - [x] consent_forms 테이블
+  - [x] consent_records 테이블
+  - [x] consent_persons 테이블 (구 personal_info)
+  - [x] addresses 테이블 (@Embeddable로 구현)
+  - [x] attachments 테이블
+  - [x] signatures 테이블 (consent_persons에 통합)
+  - [-] consent_history 테이블 (제거 예정)
+- [-] 기존 데이터 연동 View 생성 (legacy_consent_mapping)
+- [-] 기본 데이터 Insert 스크립트 생성
+  - [x] 기본 관리자 계정 (Super Admin)
+  - [x] 기본 동의서 템플릿 데이터
+  - [x] 테스트용 아파트 데이터
 
 ### 🧪 1.8 공통 유틸리티 및 헬퍼
 
-- [ ] FileUtils 클래스 생성
-  - [ ] 파일 업로드 처리
-  - [ ] 파일 이름 생성 (UUID 기반)
-  - [ ] 파일 확장자 검증
-- [ ] DateUtils 클래스 생성
-  - [ ] 날짜 포맷팅
-  - [ ] 한국 시간대 처리
-- [ ] ValidationUtils 클래스 생성
-  - [ ] 전화번호 형식 검증
-  - [ ] 주민번호 형식 검증 (생년월일)
-  - [ ] 이메일 형식 검증
-- [ ] CryptoUtils 클래스 생성 (개인정보 암호화)
-  - [ ] AES 암호화/복호화
-  - [ ] Base64 인코딩/디코딩
+- [x] FileUtils 클래스 생성
+  - [x] 파일 업로드 처리
+  - [x] 파일 이름 생성 (UUID 기반)
+  - [x] 파일 확장자 검증
+- [x] DateUtils 클래스 생성
+  - [x] 날짜 포맷팅
+  - [x] 한국 시간대 처리
+- [x] ValidationUtils 클래스 생성
+  - [x] 전화번호 형식 검증
+  - [x] 주민번호 형식 검증 (생년월일)
+  - [x] 이메일 형식 검증
+- [-] CryptoUtils 클래스 생성 (개인정보 암호화) - 제외됨
+  - [-] AES 암호화/복호화
+  - [-] Base64 인코딩/디코딩
 
 ### 📝 1.9 공통 DTO 및 응답 클래스
 
-- [ ] BaseDTO 클래스 생성 (공통 필드)
-- [ ] ApiResponse<T> 클래스 생성
-  - [ ] success, message, data 필드
-  - [ ] 성공/실패 응답 팩토리 메서드
-- [ ] PageResponse<T> 클래스 생성 (페이징 응답)
-- [ ] 공통 Validation 그룹 인터페이스 생성
+- [x] BaseDTO 클래스 생성 (공통 필드)
+- [x] ApiResponse<T> 클래스 생성
+  - [x] success, message, data 필드
+  - [x] 성공/실패 응답 팩토리 메서드
+- [x] PageResponse<T> 클래스 생성 (페이징 응답)
+- [x] 공통 Validation 그룹 인터페이스 생성
 
 ### 🎨 1.10 공통 템플릿 및 레이아웃
 
@@ -293,14 +294,14 @@
 
 ### 🎯 완료율
 
-- **Phase 1 (기반 구조)**: 5/10 완료 (50%)
+- **Phase 1 (기반 구조)**: 9/10 완료 (90%)
 - **Phase 2 (관리자 기능)**: 0/5 완료
 - **Phase 3 (사용자 시스템)**: 0/4 완료
 - **Phase 4 (API/통합)**: 0/2 완료
 - **Phase 5 (테스트/최적화)**: 0/3 완료
 - **Phase 6 (배포/운영)**: 0/1 완료
 
-**전체 진행률: 20% (5/25 완료)**
+**전체 진행률: 36% (9/25 완료)**
 
 ---
 
@@ -324,3 +325,13 @@
 
 - 2025-09-02: 초기 체크리스트 생성
 - 2025-09-02: Phase 1.1, 1.2, 1.3, 1.4, 1.5 완료
+- 2025-09-04: Phase 1.6 (예외 처리), 1.7 (데이터베이스 스키마) 완료
+  - JPA 엔티티 생성 (Apartment, ConsentForm, ConsentRecord 등)
+  - @SoftDelete 어노테이션으로 소프트 삭제 구현
+  - DataInitializer로 테스트 데이터 생성
+- 2025-09-04: Phase 1.8 (공통 유틸리티), 1.9 (공통 DTO) 완료
+  - FileUtils: 파일 업로드, UUID 기반 파일명 생성, 확장자 검증
+  - DateUtils: 한국 시간대 처리, 다양한 날짜 포맷팅, 시간 계산
+  - ValidationUtils: 전화번호, 이메일, 생년월일, 사업자번호 검증
+  - BaseDTO, ApiResponse, PageResponse 클래스 생성
+  - ValidationGroups 인터페이스 생성 (Create, Update, Delete 등)

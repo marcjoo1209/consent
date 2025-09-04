@@ -36,10 +36,6 @@ public class Admin {
     @Comment("관리자 이름")
     private String name;
 
-    @Column(length = 100)
-    @Comment("이메일")
-    private String email;
-
     @Column(nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
     @Comment("권한 (SUPER_ADMIN, ADMIN)")

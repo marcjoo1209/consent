@@ -5,7 +5,7 @@
 ### 연결 정보
 - **데이터베이스**: allppou1 (MariaDB)
 - **호스트**: cila1.cafe24.com:3306
-- **사용자**: root
+- **user/password**: root / wndudwna4
 
 ### 분석 대상 테이블
 
