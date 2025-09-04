@@ -28,9 +28,9 @@ public class ConsentForm extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "apartment_id", nullable = false)
+    @JoinColumn(name = "apart_id", nullable = false)
     @Comment("아파트")
-    private Apartment apartment;
+    private Apart apart;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "template_id")

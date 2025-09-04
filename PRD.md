@@ -132,7 +132,7 @@ CREATE TABLE administrators (
 );
 
 -- 아파트 정보 테이블
-CREATE TABLE apartments (
+CREATE TABLE aparts (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     code VARCHAR(10) NOT NULL UNIQUE,
     name VARCHAR(200) NOT NULL,
@@ -162,7 +162,7 @@ CREATE TABLE consent_forms (
 -- 동의서 정보 테이블
 CREATE TABLE consent_records (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    apartment_id BIGINT NOT NULL,
+    apart_id BIGINT NOT NULL,
     form_id BIGINT NOT NULL,
     building VARCHAR(20) NOT NULL,
     unit VARCHAR(20) NOT NULL,
@@ -171,7 +171,7 @@ CREATE TABLE consent_records (
     approved_at DATETIME,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (apartment_id) REFERENCES apartments(id),
+    FOREIGN KEY (apart_id) REFERENCES aparts(id),
     FOREIGN KEY (form_id) REFERENCES consent_forms(id)
 );
 
@@ -259,7 +259,7 @@ CREATE TABLE consent_history (
 CREATE VIEW legacy_consent_mapping AS
 SELECT 
     CONCAT(APT_CD, FORM_CD, APT_DONG, APT_HO) as legacy_key,
-    APT_CD as apartment_code,
+    APT_CD as apart_code,
     FORM_CD as form_code,
     APT_DONG as building,
     APT_HO as unit,
@@ -399,10 +399,10 @@ src/main/java/com/ctp/consent/
 /admin/login                    # 관리자 로그인
 /admin/dashboard               # 관리자 대시보드
 /admin/consents               # 동의서 관리
-/admin/apartments             # 아파트 관리
+/admin/aparts             # 아파트 관리
 
 # 사용자 (모바일 친화적)
-/consent/{apartmentCode}       # 동의서 작성
+/consent/{apartCode}       # 동의서 작성
 /consent/{id}/view            # 동의서 조회
 /consent/{id}/pdf             # PDF 다운로드
 /api/address/search           # 주소 검색 API

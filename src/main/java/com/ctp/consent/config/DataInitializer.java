@@ -18,7 +18,7 @@ public class DataInitializer {
 
     @Bean
     CommandLineRunner initDatabase(AdminRepository adminRepository,
-            ApartmentRepository apartmentRepository,
+            ApartRepository apartRepository,
             ConsentFormTemplateRepository templateRepository,
             ConsentFormRepository consentFormRepository) {
         return args -> {
@@ -51,8 +51,8 @@ public class DataInitializer {
             }
 
             // 테스트용 아파트 데이터
-            if (!apartmentRepository.existsByAptCode("APT01")) {
-                Apartment apartment1 = Apartment.builder()
+            if (!apartRepository.existsByAptCode("APT01")) {
+                Apart apart1 = Apart.builder()
                         .aptCode("APT01")
                         .aptName("태성아파트")
                         .address("서울시 강남구 삼성동")
@@ -61,12 +61,12 @@ public class DataInitializer {
                         .totalHousehold(500)
                         .build();
 
-                apartmentRepository.save(apartment1);
+                apartRepository.save(apart1);
                 log.info("테스트 아파트 생성 완료 - 태성아파트");
             }
 
-            if (!apartmentRepository.existsByAptCode("APT02")) {
-                Apartment apartment2 = Apartment.builder()
+            if (!apartRepository.existsByAptCode("APT02")) {
+                Apart apart2 = Apart.builder()
                         .aptCode("APT02")
                         .aptName("한강아파트")
                         .address("서울시 용산구 한강로")
@@ -75,7 +75,7 @@ public class DataInitializer {
                         .totalHousehold(300)
                         .build();
 
-                apartmentRepository.save(apartment2);
+                apartRepository.save(apart2);
                 log.info("테스트 아파트 생성 완료 - 한강아파트");
             }
 
@@ -86,7 +86,7 @@ public class DataInitializer {
                         .templateName("재건축 기본 동의서")
                         .category("재건축")
                         .htmlContent(
-                                "<h1>{{apartment_name}} 재건축 동의서</h1><p>본인은 {{apartment_name}} {{dong}}동 {{ho}}호의 소유자로서 재건축 사업에 동의합니다.</p>")
+                                "<h1>{{apart_name}} 재건축 동의서</h1><p>본인은 {{apart_name}} {{dong}}동 {{ho}}호의 소유자로서 재건축 사업에 동의합니다.</p>")
                         .description("재건축 사업을 위한 기본 동의서 템플릿")
                         .active(true)
                         .build();
@@ -101,7 +101,7 @@ public class DataInitializer {
                         .templateName("리모델링 기본 동의서")
                         .category("리모델링")
                         .htmlContent(
-                                "<h1>{{apartment_name}} 리모델링 동의서</h1><p>본인은 {{apartment_name}} {{dong}}동 {{ho}}호의 소유자로서 리모델링 사업에 동의합니다.</p>")
+                                "<h1>{{apart_name}} 리모델링 동의서</h1><p>본인은 {{apart_name}} {{dong}}동 {{ho}}호의 소유자로서 리모델링 사업에 동의합니다.</p>")
                         .description("리모델링 사업을 위한 기본 동의서 템플릿")
                         .active(true)
                         .build();
@@ -111,12 +111,12 @@ public class DataInitializer {
             }
 
             // 아파트별 동의서 양식
-            Apartment apt1 = apartmentRepository.findByAptCode("APT01").orElse(null);
+            Apart apt1 = apartRepository.findByAptCode("APT01").orElse(null);
             ConsentFormTemplate template1 = templateRepository.findByTemplateCode("TEMPLATE01").orElse(null);
 
             if (apt1 != null && template1 != null && !consentFormRepository.existsByFormCode("APT01_FORM01")) {
                 ConsentForm form1 = ConsentForm.builder()
-                        .apartment(apt1)
+                        .apart(apt1)
                         .template(template1)
                         .formCode("APT01_FORM01")
                         .formName("태성아파트 재건축 동의서")
@@ -132,12 +132,12 @@ public class DataInitializer {
                 log.info("아파트별 동의서 양식 생성 완료 - 태성아파트 재건축 동의서");
             }
 
-            Apartment apt2 = apartmentRepository.findByAptCode("APT02").orElse(null);
+            Apart apt2 = apartRepository.findByAptCode("APT02").orElse(null);
             ConsentFormTemplate template2 = templateRepository.findByTemplateCode("TEMPLATE02").orElse(null);
 
             if (apt2 != null && template2 != null && !consentFormRepository.existsByFormCode("APT02_FORM01")) {
                 ConsentForm form2 = ConsentForm.builder()
-                        .apartment(apt2)
+                        .apart(apt2)
                         .template(template2)
                         .formCode("APT02_FORM01")
                         .formName("한강아파트 리모델링 동의서")

@@ -9,12 +9,9 @@ import java.util.Optional;
 
 @Repository
 public interface ConsentFormTemplateRepository extends JpaRepository<ConsentFormTemplate, Long> {
-    
+
     Optional<ConsentFormTemplate> findByTemplateCode(String templateCode);
-    
     List<ConsentFormTemplate> findByActiveTrue();
-    
     List<ConsentFormTemplate> findByCategoryAndActiveTrue(String category);
-    
     boolean existsByTemplateCode(String templateCode);
 }

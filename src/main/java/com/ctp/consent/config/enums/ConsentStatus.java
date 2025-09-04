@@ -1,4 +1,4 @@
-package com.ctp.consent.api.v1.dto.model;
+package com.ctp.consent.config.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

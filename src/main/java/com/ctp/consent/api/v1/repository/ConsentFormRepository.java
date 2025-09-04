@@ -11,13 +11,10 @@ import java.util.Optional;
 
 @Repository
 public interface ConsentFormRepository extends JpaRepository<ConsentForm, Long> {
-    
+
     Optional<ConsentForm> findByFormCode(String formCode);
-    
-    List<ConsentForm> findByApartmentIdAndActiveTrue(Long apartmentId);
-    
-    @Query("SELECT cf FROM ConsentForm cf WHERE cf.apartment.aptCode = :aptCode AND cf.active = true")
-    List<ConsentForm> findByApartmentCodeAndActiveTrue(@Param("aptCode") String aptCode);
-    
+    List<ConsentForm> findByApartIdAndActiveTrue(Long apartId);
+    @Query("SELECT cf FROM ConsentForm cf WHERE cf.apart.aptCode = :aptCode AND cf.active = true")
+    List<ConsentForm> findByApartCodeAndActiveTrue(@Param("aptCode") String aptCode);
     boolean existsByFormCode(String formCode);
 }

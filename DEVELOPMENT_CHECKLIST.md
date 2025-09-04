@@ -82,7 +82,7 @@
 
 - [x] 새 데이터베이스(CTP) DDL 스크립트 생성
   - [x] administrators 테이블 (Admin 엔티티)
-  - [x] apartments 테이블
+  - [x] aparts 테이블
   - [x] consent_form_templates 테이블
   - [x] consent_forms 테이블
   - [x] consent_records 테이블
@@ -140,29 +140,26 @@
 
 ### 🔑 2.1 관리자 로그인 시스템
 
-- [ ] 관리자 로그인 Controller 구현
-- [ ] 로그인 페이지 (Thymeleaf + Tailwind CSS)
-  - [ ] 반응형 로그인 폼
-  - [ ] 로그인 실패 메시지 표시
-  - [ ] "로그인 상태 유지" 체크박스
-- [ ] 로그아웃 처리 구현
-- [ ] 로그인 성공/실패 이벤트 로깅
+- [v] 관리자 로그인 Controller 구현
+- [v] 로그인 페이지 (Thymeleaf + Tailwind CSS)
+  - [v] 반응형 로그인 폼
+  - [v] 로그인 실패 메시지 표시
+  - [v] "로그인 상태 유지" 체크박스
+- [v] 로그아웃 처리 구현
+- [v] 로그인 성공/실패 이벤트 로깅
 
 ### 📊 2.2 관리자 대시보드
 
-- [ ] AdminDashboardController 구현
-- [ ] 대시보드 데이터 Service 구현
+- [ ] DashboardController 구현
+- [ ] DashboardService 구현
   - [ ] 전체 동의서 현황 조회
   - [ ] 아파트별 통계 조회
-  - [ ] 월별 등록 트렌드 조회
-- [ ] 대시보드 페이지 템플릿 구현
+- [v] 대시보드 페이지 템플릿 구현
   - [ ] 통계 카드 컴포넌트
-  - [ ] Chart.js 연동 (트렌드 차트)
-  - [ ] 최근 등록 동의서 목록
 
 ### 📋 2.3 동의서 관리
 
-- [ ] ConsentManagementController 구현
+- [ ] ConsentController 구현
 - [ ] ConsentService 구현
   - [ ] 동의서 목록 조회 (페이징, 검색, 필터)
   - [ ] 동의서 상세 조회
@@ -177,8 +174,8 @@
 
 ### 🏠 2.4 아파트 관리
 
-- [ ] ApartmentManagementController 구현
-- [ ] ApartmentService 구현
+- [ ] ApartController 구현
+- [ ] ApartService 구현
   - [ ] 아파트 CRUD 기능
   - [ ] 동/호수 체계 설정
   - [ ] 아파트 활성화/비활성화
@@ -188,7 +185,7 @@
 
 ### 👥 2.5 사용자 관리
 
-- [ ] UserManagementController 구현
+- [v] UserController 구현
 - [ ] 관리자 계정 관리 기능
 - [ ] 권한 설정 기능
 - [ ] 사용자 관리 페이지 구현
@@ -326,7 +323,7 @@
 - 2025-09-02: 초기 체크리스트 생성
 - 2025-09-02: Phase 1.1, 1.2, 1.3, 1.4, 1.5 완료
 - 2025-09-04: Phase 1.6 (예외 처리), 1.7 (데이터베이스 스키마) 완료
-  - JPA 엔티티 생성 (Apartment, ConsentForm, ConsentRecord 등)
+  - JPA 엔티티 생성 (Apart, ConsentForm, ConsentRecord 등)
   - @SoftDelete 어노테이션으로 소프트 삭제 구현
   - DataInitializer로 테스트 데이터 생성
 - 2025-09-04: Phase 1.8 (공통 유틸리티), 1.9 (공통 DTO) 완료

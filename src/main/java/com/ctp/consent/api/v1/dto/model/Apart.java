@@ -13,14 +13,14 @@ import org.hibernate.annotations.SoftDeleteType;
  * - 각 아파트별 동의서 양식 연결
  */
 @Entity
-@Table(name = "apartments")
+@Table(name = "aparts")
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
 @SoftDelete(strategy = SoftDeleteType.DELETED, columnName = "deleted_at")
-public class Apartment extends BaseEntity {
+public class Apart extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

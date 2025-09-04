@@ -8,8 +8,7 @@ import java.util.List;
 
 @Repository
 public interface AttachmentRepository extends JpaRepository<Attachment, Long> {
-    
+
     List<Attachment> findByPersonId(Long personId);
-    
     void deleteByPersonId(Long personId);
 }

@@ -8,8 +8,7 @@ import java.util.List;
 
 @Repository
 public interface ConsentPersonRepository extends JpaRepository<ConsentPerson, Long> {
-    
+
     List<ConsentPerson> findByConsentRecordId(Long consentRecordId);
-    
     List<ConsentPerson> findByConsentRecordIdOrderByOrderIndex(Long consentRecordId);
 }

@@ -18,7 +18,7 @@
           <div class="flex items-baseline space-x-4">
             <a th:href="@{/admin/dashboard}" class="text-gray-700 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition">대시보드</a>
             <a th:href="@{/admin/consent}" class="text-gray-700 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition">동의서 관리</a>
-            <a th:href="@{/admin/apartment}" class="text-gray-700 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition">아파트 관리</a>
+            <a th:href="@{/admin/apart}" class="text-gray-700 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition">아파트 관리</a>
             <a th:href="@{/admin/user}" sec:authorize="hasRole('SUPER_ADMIN')" class="text-gray-700 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition">사용자 관리</a>
           </div>
         </div>

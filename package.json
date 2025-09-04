@@ -2,7 +2,7 @@
   "name": "consent-management",
   "version": "1.0.0",
   "type": "module",
-  "description": "Apartment Consent Management System",
+  "description": "Apart Consent Management System",
   "scripts": {
     "dev": "vite build --watch",
     "build": "vite build",

@@ -1,14 +1,34 @@
 package com.ctp.consent.api.v1.dto.model;
 
-import jakarta.persistence.*;
-import lombok.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.annotations.Comment;
 import org.hibernate.annotations.SoftDelete;
 import org.hibernate.annotations.SoftDeleteType;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import com.ctp.consent.config.enums.ConsentStatus;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * 실제 작성된 동의서 기록을 관리하는 핵심 엔티티
@@ -32,9 +52,9 @@ public class ConsentRecord extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "apartment_id", nullable = false)
+    @JoinColumn(name = "apart_id", nullable = false)
     @Comment("아파트")
-    private Apartment apartment;
+    private Apart apart;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "consent_form_id", nullable = false)
