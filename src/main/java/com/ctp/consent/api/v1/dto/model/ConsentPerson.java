@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.SoftDelete;
-import org.hibernate.annotations.SoftDeleteType;
 
 import com.ctp.consent.config.enums.PersonRole;
 
@@ -45,7 +43,6 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@SoftDelete(strategy = SoftDeleteType.DELETED, columnName = "deleted_at")
 public class ConsentPerson extends BaseEntity {
 
     @Id
@@ -97,6 +94,14 @@ public class ConsentPerson extends BaseEntity {
     @Builder.Default
     private List<Attachment> attachments = new ArrayList<>();
 
+    public String getRelation() {
+        return this.role != null ? this.role.getDescription() : "";
+    }
+    
+    public String getSignatureUrl() {
+        return this.signatureData != null ? "/api/consent/signature/" + this.id : null;
+    }
+    
     public void addAttachment(Attachment attachment) {
         attachments.add(attachment);
         attachment.setPerson(this);

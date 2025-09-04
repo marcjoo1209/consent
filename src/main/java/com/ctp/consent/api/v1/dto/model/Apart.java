@@ -3,8 +3,6 @@ package com.ctp.consent.api.v1.dto.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.SoftDelete;
-import org.hibernate.annotations.SoftDeleteType;
 
 /**
  * 아파트 정보를 관리하는 엔티티
@@ -19,7 +17,6 @@ import org.hibernate.annotations.SoftDeleteType;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@SoftDelete(strategy = SoftDeleteType.DELETED, columnName = "deleted_at")
 public class Apart extends BaseEntity {
 
     @Id

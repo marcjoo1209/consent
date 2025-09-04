@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.Comment;
-import org.hibernate.annotations.SoftDelete;
-import org.hibernate.annotations.SoftDeleteType;
 
 import com.ctp.consent.config.enums.ConsentStatus;
 
@@ -43,7 +41,6 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
-@SoftDelete(strategy = SoftDeleteType.DELETED, columnName = "deleted_at")
 public class ConsentRecord extends BaseEntity {
 
     @Id
@@ -90,6 +87,22 @@ public class ConsentRecord extends BaseEntity {
     @Column(length = 500)
     @Comment("거부 사유")
     private String rejectReason;
+
+    @Column
+    @Comment("승인 시간")
+    private LocalDateTime approvedAt;
+
+    @Column
+    @Comment("반려 시간")
+    private LocalDateTime rejectedAt;
+
+    @Column(length = 500)
+    @Comment("승인 코멘트")
+    private String approvalComment;
+
+    @Column(length = 500)
+    @Comment("반려 사유")
+    private String rejectionReason;
 
     @OneToMany(mappedBy = "consentRecord", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ConsentRecordRepository extends JpaRepository<ConsentRecord, Long> {
+public interface ConsentRecordRepository extends JpaRepository<ConsentRecord, Long>, org.springframework.data.jpa.repository.JpaSpecificationExecutor<ConsentRecord> {
 
     Page<ConsentRecord> findByApartId(Long apartId, Pageable pageable);
     Page<ConsentRecord> findByStatus(ConsentStatus status, Pageable pageable);
@@ -25,4 +25,7 @@ public interface ConsentRecordRepository extends JpaRepository<ConsentRecord, Lo
     Long countByApartIdAndStatus(Long apartId, ConsentStatus status);
     @Query("SELECT COUNT(cr) FROM ConsentRecord cr WHERE cr.apart.id = :apartId AND cr.status = 'AGREED'")
     Long countAgreedByApartId(@Param("apartId") Long apartId);
+    
+    Long countByApartId(Long apartId);
+    Long countByStatus(ConsentStatus status);
 }
