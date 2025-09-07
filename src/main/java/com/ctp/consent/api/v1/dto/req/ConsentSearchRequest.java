@@ -16,15 +16,10 @@ import java.time.LocalDate;
 public class ConsentSearchRequest {
 
     private Long apartmentId;
-
     private String dong;
-
     private String ho;
-
     private String participantName;
-
     private String phoneNumber;
-
     private ConsentStatus status;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

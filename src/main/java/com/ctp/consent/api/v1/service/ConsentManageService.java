@@ -24,7 +24,6 @@ import org.springframework.util.StringUtils;
 import com.ctp.consent.api.v1.dto.model.ConsentRecord;
 import com.ctp.consent.api.v1.dto.req.ConsentSearchRequest;
 import com.ctp.consent.api.v1.dto.res.ConsentDetailResponse;
-import com.ctp.consent.api.v1.dto.res.ConsentStatisticsResponse;
 import com.ctp.consent.api.v1.repository.ConsentRecordRepository;
 import com.ctp.consent.config.enums.ConsentStatus;
 import com.ctp.consent.exception.ConsentNotFoundException;
@@ -37,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ConsentService {
+public class ConsentManageService {
 
     private final ConsentRecordRepository consentRecordRepository;
 
@@ -214,23 +213,4 @@ public class ConsentService {
         }
     }
 
-    public ConsentStatisticsResponse getStatistics(Long apartmentId) {
-        ConsentStatisticsResponse stats = new ConsentStatisticsResponse();
-
-        if (apartmentId != null) {
-            stats.setTotal(consentRecordRepository.countByApartId(apartmentId));
-            stats.setPending(consentRecordRepository.countByApartIdAndStatus(apartmentId, ConsentStatus.PENDING));
-            stats.setApproved(consentRecordRepository.countByApartIdAndStatus(apartmentId, ConsentStatus.APPROVED));
-            stats.setRejected(consentRecordRepository.countByApartIdAndStatus(apartmentId, ConsentStatus.REJECTED));
-        } else {
-            stats.setTotal(consentRecordRepository.count());
-            stats.setPending(consentRecordRepository.countByStatus(ConsentStatus.PENDING));
-            stats.setApproved(consentRecordRepository.countByStatus(ConsentStatus.APPROVED));
-            stats.setRejected(consentRecordRepository.countByStatus(ConsentStatus.REJECTED));
-        }
-
-        stats.setApprovalRate(stats.getTotal() > 0 ? (double) stats.getApproved() / stats.getTotal() * 100 : 0);
-
-        return stats;
-    }
 }

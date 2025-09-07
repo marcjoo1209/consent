@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default}">
+  <body>
+    <div layout:fragment="content">
+      <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!--/* Page Header */-->
+        <div class="mb-8">
+          <div class="flex items-center space-x-3 mb-2">
+            <a th:href="@{/admin/aparts}" class="text-gray-500 hover:text-gray-700">
+              <i class="fas fa-arrow-left"></i>
+            </a>
+            <h1 class="text-3xl font-bold text-gray-900">동/호수 체계 설정</h1>
+          </div>
+          <p class="text-gray-600 ml-7">
+            <span th:text="${apart.aptName}"></span>
+            아파트의 동/호수 체계를 설정합니다
+          </p>
+        </div>
+
+        <!--/* Apart Info Card */-->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">아파트 정보</h3>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div>
+              <p class="text-sm text-gray-500">아파트 코드</p>
+              <p class="font-mono text-sm font-medium" th:text="${apart.aptCode}"></p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">아파트명</p>
+              <p class="text-sm font-medium" th:text="${apart.aptName}"></p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">총 동 수</p>
+              <p class="text-sm font-medium" th:text="${apart.totalDong} + '동'"></p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">총 세대수</p>
+              <p class="text-sm font-medium" th:text="${apart.totalHousehold} + '세대'"></p>
+            </div>
+          </div>
+        </div>
+
+        <!--/* Unit Configuration */-->
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">동별 호수 설정</h3>
+
+          <div id="unitConfig" class="space-y-4">
+            <!--/* Dynamic unit configuration will be rendered here */-->
+          </div>
+
+          <div class="mt-6 pt-6 border-t">
+            <button type="button" onclick="addDongConfig()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
+              <i class="fas fa-plus mr-2"></i>
+              동 추가
+            </button>
+            <button type="button" onclick="autoGenerateUnits()" class="ml-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+              <i class="fas fa-magic mr-2"></i>
+              자동 생성
+            </button>
+          </div>
+
+          <div class="mt-6 flex justify-end space-x-3">
+            <a th:href="@{/admin/aparts}" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">취소</a>
+            <button type="button" onclick="saveUnitConfig()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+              <i class="fas fa-save mr-2"></i>
+              저장
+            </button>
+          </div>
+        </div>
+
+        <!--/* Current Units Display */-->
+        <div class="mt-6 bg-white rounded-lg shadow-md p-6" th:if="${units != null and !units.isEmpty()}">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">현재 동/호수 체계</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div th:each="entry : ${units}" class="border rounded-lg p-4">
+              <h4 class="font-medium text-gray-900 mb-2" th:text="${entry.key}"></h4>
+              <div class="text-sm text-gray-600 max-h-32 overflow-y-auto">
+                <span th:each="unit, iterStat : ${entry.value}">
+                  <span th:text="${unit}"></span>
+                  <span th:unless="${iterStat.last}">,</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--/* Page-specific scripts */-->
+    <th:block layout:fragment="script">
+      <script th:inline="javascript">
+        const apartId = /*[[${apart.id}]]*/ [];
+        let dongConfigIndex = 0;
+
+        function addDongConfig() {
+          const container = document.getElementById("unitConfig");
+          const dongDiv = document.createElement("div");
+          dongDiv.className = "bg-gray-50 rounded-lg p-4";
+          dongDiv.id = `dong-${dongConfigIndex}`;
+
+          dongDiv.innerHTML = `
+                <div class="flex justify-between items-start mb-3">
+                    <h4 class="font-medium text-gray-900">동 설정</h4>
+                    <button type="button" onclick="removeDongConfig('dong-${dongConfigIndex}')"
+                            class="text-red-600 hover:text-red-800">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">동 이름</label>
+                        <input type="text" class="dong-name w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+                               placeholder="예: 101동">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">시작 층</label>
+                        <input type="number" class="start-floor w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+                               placeholder="1" min="1" value="1">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">끝 층</label>
+                        <input type="number" class="end-floor w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+                               placeholder="15" min="1" value="15">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-1">층당 호수</label>
+                        <input type="number" class="units-per-floor w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+                               placeholder="4" min="1" value="4">
+                    </div>
+                </div>
+            `;
+
+          container.appendChild(dongDiv);
+          dongConfigIndex++;
+        }
+
+        function removeDongConfig(dongId) {
+          const element = document.getElementById(dongId);
+          if (element) {
+            element.remove();
+          }
+        }
+
+        function autoGenerateUnits() {
+          const totalDong = /*[[${apart.totalDong}]]*/ [] || 5;
+          const container = document.getElementById("unitConfig");
+          container.innerHTML = "";
+
+          for (let i = 0; i < totalDong; i++) {
+            addDongConfig();
+            const lastDong = container.lastElementChild;
+            const dongName = lastDong.querySelector(".dong-name");
+            dongName.value = `${101 + i}동`;
+          }
+
+          window.showToast("동 체계가 자동 생성되었습니다", "success");
+        }
+
+        function saveUnitConfig() {
+          const dongElements = document.querySelectorAll("#unitConfig > div");
+          const dongConfigs = [];
+
+          dongElements.forEach((elem) => {
+            const config = {
+              dongName: elem.querySelector(".dong-name").value,
+              startFloor: parseInt(elem.querySelector(".start-floor").value),
+              endFloor: parseInt(elem.querySelector(".end-floor").value),
+              unitsPerFloor: parseInt(elem.querySelector(".units-per-floor").value),
+            };
+
+            if (config.dongName && config.startFloor && config.endFloor && config.unitsPerFloor) {
+              dongConfigs.push(config);
+            }
+          });
+
+          if (dongConfigs.length === 0) {
+            alert("최소 하나 이상의 동을 설정해주세요.");
+            return;
+          }
+
+          const unitConfig = {
+            totalDong: dongConfigs.length,
+            dongConfigs: dongConfigs,
+          };
+
+          const csrfToken = document.querySelector('meta[name="_csrf"]') ? document.querySelector('meta[name="_csrf"]').content : "";
+          const csrfHeader = document.querySelector('meta[name="_csrf_header"]') ? document.querySelector('meta[name="_csrf_header"]').content : "X-CSRF-TOKEN";
+
+          fetch(`/admin/aparts/${apartId}/units`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              [csrfHeader]: csrfToken,
+            },
+            body: JSON.stringify(unitConfig),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.success) {
+                window.showToast(data.message || "동/호수 체계가 저장되었습니다", "success");
+                setTimeout(() => location.reload(), 1500);
+              } else {
+                alert(data.message || "저장에 실패했습니다.");
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("저장 중 오류가 발생했습니다.");
+            });
+        }
+
+        // Initialize with existing units if available
+        document.addEventListener("DOMContentLoaded", function () {
+          const existingUnits = /*[[${units}]]*/ {};
+          const totalDong = /*[[${apart.totalDong}]]*/ 0;
+
+          // 기존 데이터가 있으면 표시, 없으면 totalDong 기반으로 자동 생성
+          if (existingUnits && Object.keys(existingUnits).length > 0) {
+            // 기존 데이터를 기반으로 동 설정 표시
+            Object.keys(existingUnits).forEach((dongName, index) => {
+              addDongConfig();
+              const lastDong = document.getElementById("unitConfig").lastElementChild;
+              const dongNameInput = lastDong.querySelector(".dong-name");
+              dongNameInput.value = dongName;
+
+              // 호수 데이터에서 층 정보 추출 (예: "101", "102" -> 1층)
+              const units = existingUnits[dongName];
+              if (units && units.length > 0) {
+                // 층수 계산
+                const floors = new Set();
+                const unitsPerFloorMap = {};
+
+                units.forEach((unit) => {
+                  const floor = Math.floor(parseInt(unit) / 100);
+                  floors.add(floor);
+                  if (!unitsPerFloorMap[floor]) {
+                    unitsPerFloorMap[floor] = 0;
+                  }
+                  unitsPerFloorMap[floor]++;
+                });
+
+                const floorArray = Array.from(floors).sort((a, b) => a - b);
+                const startFloor = floorArray[0] || 1;
+                const endFloor = floorArray[floorArray.length - 1] || 15;
+                const avgUnitsPerFloor = Math.round(units.length / floorArray.length) || 4;
+
+                lastDong.querySelector(".start-floor").value = startFloor;
+                lastDong.querySelector(".end-floor").value = endFloor;
+                lastDong.querySelector(".units-per-floor").value = avgUnitsPerFloor;
+              }
+            });
+
+            window.showToast("기존 동/호수 체계를 불러왔습니다", "info");
+          } else if (totalDong > 0) {
+            // totalDong이 있으면 자동 생성
+            autoGenerateUnits();
+          } else {
+            // 아무것도 없으면 빈 폼 하나 추가
+            addDongConfig();
+          }
+        });
+      </script>
+    </th:block>
+  </body>
+</html>

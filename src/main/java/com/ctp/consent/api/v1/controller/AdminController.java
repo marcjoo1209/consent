@@ -33,9 +33,4 @@ public class AdminController {
         return "admin/login";
     }
 
-    @GetMapping("/dashboard")
-    public String dashboard() {
-        log.info("관리자 대시보드 접속");
-        return "admin/dashboard";
-    }
 }

@@ -20,8 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ctp.consent.api.v1.dto.ApiResponse;
 import com.ctp.consent.api.v1.dto.req.ConsentSearchRequest;
-import com.ctp.consent.api.v1.dto.res.ConsentStatisticsResponse;
-import com.ctp.consent.api.v1.service.ConsentService;
+import com.ctp.consent.api.v1.service.ConsentManageService;
 import com.ctp.consent.config.enums.ConsentStatus;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -33,14 +32,14 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin/consent")
 @RequiredArgsConstructor
 @PreAuthorize("hasAnyRole('ADMIN', 'SUPER_ADMIN')")
-public class ConsentController {
+public class ConsentManageController {
 
-    private final ConsentService consentService;
+    private final ConsentManageService consentManageService;
 
     @GetMapping
     public String list(@ModelAttribute ConsentSearchRequest searchRequest, @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
         log.debug("동의서 목록 조회: {}", searchRequest);
-        var page = consentService.searchConsents(searchRequest, pageable);
+        var page = consentManageService.searchConsents(searchRequest, pageable);
         model.addAttribute("consents", page.getContent());
         model.addAttribute("page", page);
         model.addAttribute("searchRequest", searchRequest);
@@ -51,7 +50,7 @@ public class ConsentController {
     @GetMapping("/{id}")
     public String detail(@PathVariable Long id, Model model) {
         log.debug("동의서 상세 조회: {}", id);
-        var consent = consentService.getConsentDetail(id);
+        var consent = consentManageService.getConsentDetail(id);
         model.addAttribute("consent", consent);
         return "admin/consent/detail";
     }
@@ -60,7 +59,7 @@ public class ConsentController {
     @ResponseBody
     public ResponseEntity<ApiResponse<Void>> approve(@PathVariable Long id, @RequestParam(required = false) String comment) {
         log.info("동의서 승인 처리: id={}, comment={}", id, comment);
-        consentService.approveConsent(id, comment);
+        consentManageService.approveConsent(id, comment);
         return ResponseEntity.ok(ApiResponse.success("동의서가 승인되었습니다."));
     }
 
@@ -68,7 +67,7 @@ public class ConsentController {
     @ResponseBody
     public ResponseEntity<ApiResponse<Void>> reject(@PathVariable Long id, @RequestParam String reason) {
         log.info("동의서 반려 처리: id={}, reason={}", id, reason);
-        consentService.rejectConsent(id, reason);
+        consentManageService.rejectConsent(id, reason);
         return ResponseEntity.ok(ApiResponse.success("동의서가 반려되었습니다."));
     }
 
@@ -77,7 +76,7 @@ public class ConsentController {
     public ResponseEntity<ApiResponse<Void>> bulkApprove(@RequestBody List<Long> ids) {
         log.info("동의서 일괄 승인: {} 건", ids.size());
 
-        int processed = consentService.bulkApprove(ids);
+        int processed = consentManageService.bulkApprove(ids);
         return ResponseEntity.ok(ApiResponse.success(processed + "건이 승인되었습니다."));
     }
 
@@ -85,19 +84,14 @@ public class ConsentController {
     @ResponseBody
     public ResponseEntity<ApiResponse<Void>> bulkReject(@RequestBody List<Long> ids, @RequestParam String reason) {
         log.info("동의서 일괄 반려: {} 건", ids.size());
-        int processed = consentService.bulkReject(ids, reason);
+        int processed = consentManageService.bulkReject(ids, reason);
         return ResponseEntity.ok(ApiResponse.success(processed + "건이 반려되었습니다."));
     }
 
     @GetMapping("/export")
     public void exportExcel(@ModelAttribute ConsentSearchRequest searchRequest, HttpServletResponse response) {
         log.info("동의서 Excel 다운로드");
-        consentService.exportToExcel(searchRequest, response);
+        consentManageService.exportToExcel(searchRequest, response);
     }
 
-    @GetMapping("/statistics")
-    @ResponseBody
-    public ResponseEntity<ApiResponse<ConsentStatisticsResponse>> getStatistics(@RequestParam(required = false) Long apartmentId) {
-        return ResponseEntity.ok(ApiResponse.success(consentService.getStatistics(apartmentId), "통계 조회 성공"));
-    }
 }

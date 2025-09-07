@@ -1,26 +1,21 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default}">
-  <head>
-    <title>관리자 대시보드</title>
-  </head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layouts/default}">
   <body>
-    <div layout:fragment="content" class="bg-gray-50 min-h-screen">
-      <!-- Main Content -->
-      <main class="container mx-auto px-4 py-8 max-w-7xl">
-        <!-- Header Section -->
+    <div layout:fragment="content">
+      <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!--/* Page Header */-->
         <div class="mb-8">
-          <h2 class="text-3xl font-bold text-gray-900">관리자 대시보드</h2>
-          <p class="text-gray-600 mt-2">동의서 관리 시스템에 오신 것을 환영합니다.</p>
+          <h1 class="text-4xl font-bold text-gray-900 mb-2">대시보드</h1>
+          <p class="text-gray-600">동의서 관리 시스템 전체 현황을 한눈에 확인하세요.</p>
         </div>
-
-        <!-- Statistics Cards -->
+        <!--/* Statistics Cards */-->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <!-- Total Consents Card -->
+          <!--/* Total Consents Card */-->
           <div class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow p-6">
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-sm text-gray-500 mb-1">전체 동의서</p>
-                <p class="text-3xl font-bold">0</p>
+                <h3 class="text-3xl font-bold" th:text="${statistics.total}">0</h3>
                 <p class="text-xs text-gray-400 mt-1">총 등록 건수</p>
               </div>
               <div class="hidden md:flex w-14 h-14 bg-gray-100 rounded-lg items-center justify-center">
@@ -29,12 +24,12 @@
             </div>
           </div>
 
-          <!-- Pending Approval Card -->
+          <!--/* Pending Approval Card */-->
           <div class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow p-6">
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-sm text-gray-500 mb-1">승인 대기</p>
-                <p class="text-3xl font-bold">0</p>
+                <h3 class="text-3xl font-bold" th:text="${statistics.pending}">0</h3>
                 <p class="text-xs text-gray-400 mt-1">처리 필요</p>
               </div>
               <div class="hidden md:flex w-14 h-14 bg-gray-100 rounded-lg items-center justify-center">
@@ -43,12 +38,12 @@
             </div>
           </div>
 
-          <!-- Approved Card -->
+          <!--/* Approved Card */-->
           <div class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow p-6">
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-sm text-gray-500 mb-1">승인 완료</p>
-                <p class="text-3xl font-bold">0</p>
+                <h3 class="text-3xl font-bold" th:text="${statistics.approve}">0</h3>
                 <p class="text-xs text-gray-400 mt-1">처리 완료</p>
               </div>
               <div class="hidden md:flex w-14 h-14 bg-gray-100 rounded-lg items-center justify-center">
@@ -57,12 +52,12 @@
             </div>
           </div>
 
-          <!-- Rejected Card -->
+          <!--/* Rejected Card */-->
           <div class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow p-6">
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-sm text-gray-500 mb-1">반려</p>
-                <p class="text-3xl font-bold">0</p>
+                <h3 class="text-3xl font-bold" th:text="${statistics.reject}">0</h3>
                 <p class="text-xs text-gray-400 mt-1">재검토 필요</p>
               </div>
               <div class="hidden md:flex w-14 h-14 bg-gray-100 rounded-lg items-center justify-center">
@@ -72,90 +67,108 @@
           </div>
         </div>
 
-        <!-- Quick Actions -->
-        <div class="bg-white rounded-lg shadow p-6 mb-8">
-          <h3 class="text-xl font-semibold text-gray-900 mb-6">빠른 메뉴</h3>
+        <!--/* Quick Actions */-->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h3 class="text-xl font-semibold mb-4 pb-2">빠른 메뉴</h3>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <button class="flex flex-col items-center p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-              <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-3">
+            <a href="/admin/consent" class="flex flex-col items-center p-4 rounded-lg border border-gray-200 hover:shadow-md transition duration-200">
+              <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-3">
                 <i class="fas fa-clipboard-list text-blue-600 text-xl"></i>
               </div>
               <span class="text-sm font-medium text-gray-700">동의서 관리</span>
-            </button>
+            </a>
 
-            <button class="flex flex-col items-center p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-              <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-3">
+            <a href="/admin/apartment" class="flex flex-col items-center p-4 rounded-lg border border-gray-200 hover:shadow-md transition duration-200">
+              <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-3">
                 <i class="fas fa-building text-green-600 text-xl"></i>
               </div>
               <span class="text-sm font-medium text-gray-700">아파트 관리</span>
-            </button>
+            </a>
 
-            <button class="flex flex-col items-center p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-              <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-3">
+            <a href="/admin/users" class="flex flex-col items-center p-4 rounded-lg border border-gray-200 hover:shadow-md transition duration-200">
+              <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-3">
                 <i class="fas fa-users text-purple-600 text-xl"></i>
               </div>
               <span class="text-sm font-medium text-gray-700">사용자 관리</span>
-            </button>
+            </a>
 
-            <button class="flex flex-col items-center p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-              <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-3">
+            <a href="/admin/reports" class="flex flex-col items-center p-4 rounded-lg border border-gray-200 hover:shadow-md transition duration-200">
+              <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-3">
                 <i class="fas fa-chart-bar text-indigo-600 text-xl"></i>
               </div>
               <span class="text-sm font-medium text-gray-700">보고서</span>
-            </button>
+            </a>
           </div>
         </div>
 
-        <!-- Recent Consents Table -->
-        <div class="bg-white rounded-lg shadow overflow-hidden">
-          <div class="px-6 py-4 border-b border-gray-200">
-            <h3 class="text-xl font-semibold text-gray-900">최근 등록 동의서</h3>
+        <!--/* Recent Consents Table */-->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <div class="p-6 border-b border-gray-200">
+            <div class="flex justify-between items-center">
+              <h3 class="text-xl font-semibold">최근 제출된 동의서</h3>
+              <a href="/admin/consent" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition duration-200">
+                전체 보기
+                <i class="fas fa-arrow-right ml-2"></i>
+              </a>
+            </div>
           </div>
-          <div class="p-6">
-            <!-- Empty State -->
-            <div class="text-center py-12">
-              <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-inbox text-gray-400 text-3xl"></i>
-              </div>
-              <p class="text-gray-500 text-lg mb-2">아직 등록된 동의서가 없습니다.</p>
-              <p class="text-gray-400 text-sm">새로운 동의서가 등록되면 여기에 표시됩니다.</p>
-            </div>
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">번호</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">아파트</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">동/호</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">신청자</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">상태</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">신청일</th>
+                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">작업</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200 py-6">
+                <tr th:each="consent : ${recentConsents}" class="hover:bg-gray-50">
+                  <td class="px-6 py-4 text-sm text-gray-900" th:text="${consent.id}"></td>
+                  <td class="px-6 py-4 text-sm text-gray-900" th:text="${consent.apartmentName ?: '-'}"></td>
+                  <td class="px-6 py-4 text-sm text-gray-900">
+                    <span th:text="${consent.aptDong + '동 ' + consent.aptHo + '호'}"></span>
+                  </td>
+                  <td class="px-6 py-4 text-sm text-gray-900" th:text="${consent.applicantName ?: '-'}"></td>
+                  <td class="px-6 py-4">
+                    <span
+                      th:class="${'inline-flex px-2 py-1 text-xs font-semibold rounded-full ' + 
+                                                    (consent.status.name() == 'PENDING' ? 'bg-yellow-100 text-yellow-800' : 
+                                                     consent.status.name() == 'APPROVED' ? 'bg-green-100 text-green-800' : 
+                                                     consent.status.name() == 'REJECTED' ? 'bg-red-100 text-red-800' : 
+                                                     'bg-gray-100 text-gray-800')}"
+                      th:text="${consent.status.description}"
+                    ></span>
+                  </td>
+                  <td class="px-6 py-4 text-sm text-gray-900" th:text="${#temporals.format(consent.createdAt, 'MM-dd HH:mm')}"></td>
+                  <td class="px-6 py-4 text-sm">
+                    <a th:href="@{/admin/consent/{id}(id=${consent.id})}" class="inline-flex items-center text-blue-600 hover:text-blue-900 transition duration-200">
+                      <i class="fas fa-eye mr-1"></i>
+                      상세
+                    </a>
+                  </td>
+                </tr>
 
-            <!-- Table (hidden when empty, shown when data exists) -->
-            <div class="hidden">
-              <div class="overflow-x-auto">
-                <table class="w-full">
-                  <thead class="bg-gray-50 border-b border-gray-200">
-                    <tr>
-                      <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">번호</th>
-                      <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">아파트명</th>
-                      <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">동/호수</th>
-                      <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">신청자</th>
-                      <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">상태</th>
-                      <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">등록일</th>
-                      <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">작업</th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-gray-200">
-                    <!-- Data rows will be inserted here -->
-                  </tbody>
-                </table>
-              </div>
-            </div>
+                <!--/* Empty State */-->
+                <tr th:if="${#lists.isEmpty(recentConsents)}">
+                  <td colspan="7" class="px-6 py-16 text-center">
+                    <div class="flex flex-col items-center">
+                      <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-inbox text-3xl text-gray-400"></i>
+                      </div>
+                      <p class="text-xl font-medium text-gray-900 mb-2">최근 제출된 동의서가 없습니다</p>
+                      <p class="text-gray-500">새로운 동의서가 제출되면 여기에 표시됩니다.</p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-
-        <!-- Activity Chart (placeholder) -->
-        <div class="mt-8 bg-white rounded-lg shadow p-6">
-          <h3 class="text-xl font-semibold text-gray-900 mb-6">월별 동의서 통계</h3>
-          <div class="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
-            <div class="text-center">
-              <i class="fas fa-chart-line text-gray-400 text-4xl mb-3"></i>
-              <p class="text-gray-500">차트 데이터가 준비 중입니다.</p>
-            </div>
-          </div>
-        </div>
-      </main>
+      </div>
     </div>
   </body>
 </html>
