@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <!--/* Public Header Fragment */-->
+    <header th:fragment="header(apartmentName, consentTitle)" class="bg-white shadow-sm border-b border-gray-200">
+      <div class="container mx-auto px-2 py-4">
+        <div class="text-center">
+          <!--/* Apartment Name - This will be dynamically set */-->
+          <h1 class="text-lg font-bold text-gray-900 mb-2" th:text="${apartmentName ?: '아파트명'}">아파트명</h1>
+          <!--/* Consent Form Title - This will be dynamically set */-->
+          <h2 class="text-sm text-gray-600" th:text="${consentTitle ?: '동의서'}">동의서</h2>
+        </div>
+      </div>
+    </header>
+  </body>
+</html>

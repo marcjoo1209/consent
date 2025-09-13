@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default}">
+  <body>
+    <div layout:fragment="content">
+      <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!--/* Page Header */-->
+        <div class="mb-8 flex justify-between items-center">
+          <div>
+            <h1 class="text-4xl font-bold text-gray-900">사용자 관리</h1>
+            <p class="mt-2 text-gray-600">시스템 관리자 계정을 관리합니다</p>
+          </div>
+          <a th:href="@{/admin/users/new}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+            <i class="fas fa-user-plus mr-2"></i>
+            새 사용자 등록
+          </a>
+        </div>
+
+        <!--/* Success/Error Messages */-->
+        <div th:if="${message}" class="bg-green-50 border-l-4 border-green-500 p-4 mb-6">
+          <div class="flex items-center">
+            <i class="fas fa-check-circle text-green-500 mr-3"></i>
+            <p class="text-green-800" th:text="${message}"></p>
+          </div>
+        </div>
+
+        <!--/* Search Card */-->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+          <form th:action="@{/admin/users}" method="get" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
+              <div class="col-span-2">
+                <input type="text" name="search" th:value="${search}" placeholder="사용자명, 이름, 이메일 검색" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+              </div>
+              <div class="col-span-1">
+                <select name="role" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                  <option value="">권한</option>
+                  <option value="SUPER_ADMIN" th:selected="${role == 'SUPER_ADMIN'}">최고 관리자</option>
+                  <option value="ADMIN" th:selected="${role == 'ADMIN'}">관리자</option>
+                </select>
+              </div>
+              <div class="col-span-1">
+                <select name="active" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                  <option value="">상태</option>
+                  <option value="true" th:selected="${active == true}">활성</option>
+                  <option value="false" th:selected="${active == false}">비활성</option>
+                </select>
+              </div>
+              <div class="col-span-1">
+                <button type="submit" class="w-full px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition duration-200">
+                  <i class="fas fa-search mr-2"></i>
+                  검색
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!--/* Table Card */-->
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">사용자명</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">이름</th>
+                <th class="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">이메일</th>
+                <th class="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">전화번호</th>
+                <th class="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">권한</th>
+                <th class="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">상태</th>
+                <th class="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">마지막 로그인</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">관리</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr th:each="user : ${users.content}">
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="flex items-center">
+                    <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                      <i class="fas fa-user text-gray-500"></i>
+                    </div>
+                    <div class="ml-3">
+                      <div class="text-sm font-medium text-gray-900" th:text="${user.username}"></div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-900" th:text="${user.name}"></div>
+                </td>
+                <td class="hidden md:table-cell px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-600" th:text="${user.email}"></div>
+                </td>
+                <td class="hidden md:table-cell px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-600" th:text="${user.phoneNumber}"></div>
+                </td>
+                <td class="hidden md:table-cell px-6 py-4 whitespace-nowrap">
+                  <span th:class="${user.roleBadgeClass} + ' px-2 py-1 text-xs rounded-full'" th:text="${user.roleDisplayName}"></span>
+                </td>
+                <td class="hidden md:table-cell px-6 py-4 whitespace-nowrap">
+                  <span th:class="${user.statusBadgeClass} + ' px-2 py-1 text-xs rounded-full'" th:text="${user.statusText}"></span>
+                </td>
+                <td class="hidden md:table-cell px-6 py-4 whitespace-nowrap">
+                  <div class="text-sm text-gray-600" th:text="${user.lastLoginAt != null} ? ${#temporals.format(user.lastLoginAt, 'yyyy-MM-dd HH:mm')} : '-'"></div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm">
+                  <div class="flex space-x-2">
+                    <a th:href="@{/admin/users/{id}/edit(id=${user.id})}" class="text-blue-600 hover:text-blue-900" title="수정">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <button type="button" th:data-id="${user.id}" onclick="resetPassword(this.dataset.id)" class="text-green-600 hover:text-green-900" title="비밀번호 재설정">
+                      <i class="fas fa-key"></i>
+                    </button>
+                    <button type="button" th:data-id="${user.id}" onclick="toggleActive(this.dataset.id)" class="text-yellow-600 hover:text-yellow-900" title="상태 변경">
+                      <i class="fas fa-power-off"></i>
+                    </button>
+                    <button type="button" th:data-id="${user.id}" th:data-name="${user.username}" onclick="deleteUser(this.dataset.id, this.dataset.name)" class="text-red-600 hover:text-red-900" title="삭제">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr th:if="${#lists.isEmpty(users.content)}">
+                <td colspan="8" class="px-6 py-12 text-center text-gray-500">등록된 사용자가 없습니다.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!--/* Pagination */-->
+        <div th:if="${users.totalPages > 1}" class="mt-6 flex justify-center">
+          <nav class="flex items-center space-x-1">
+            <a th:href="@{/admin/users(page=${users.currentPage - 1}, search=${search}, role=${role}, active=${active})}" th:if="${users.currentPage > 0}" class="px-3 py-2 text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+              <i class="fas fa-chevron-left"></i>
+            </a>
+
+            <span th:each="pageNum : ${#numbers.sequence(0, users.totalPages - 1)}" th:if="${pageNum >= users.currentPage - 2 and pageNum <= users.currentPage + 2}">
+              <a th:href="@{/admin/users(page=${pageNum}, search=${search}, role=${role}, active=${active})}" th:class="${pageNum == users.currentPage} ? 'px-3 py-2 text-white bg-blue-600 border border-blue-600 rounded-md' : 'px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50'" th:text="${pageNum + 1}"></a>
+            </span>
+
+            <a th:href="@{/admin/users(page=${users.currentPage + 1}, search=${search}, role=${role}, active=${active})}" th:if="${users.currentPage < users.totalPages - 1}" class="px-3 py-2 text-gray-500 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+              <i class="fas fa-chevron-right"></i>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <!--/* Page-specific scripts */-->
+    <th:block layout:fragment="script">
+      <script>
+        function toggleActive(id) {
+          if (confirm("사용자 상태를 변경하시겠습니까?")) {
+            const csrfToken = document.querySelector('meta[name="_csrf"]') ? document.querySelector('meta[name="_csrf"]').content : "";
+            const csrfHeader = document.querySelector('meta[name="_csrf_header"]') ? document.querySelector('meta[name="_csrf_header"]').content : "X-CSRF-TOKEN";
+
+            fetch(`/admin/users/${id}/toggle-active`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                [csrfHeader]: csrfToken,
+              },
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success) {
+                  window.showToast("상태가 변경되었습니다", "success");
+                  setTimeout(() => location.reload(), 1500);
+                } else {
+                  window.showToast(data.message || "상태 변경에 실패했습니다", "error");
+                }
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+                window.showToast("상태 변경 중 오류가 발생했습니다", "error");
+              });
+          }
+        }
+
+        function resetPassword(id) {
+          if (confirm("비밀번호를 재설정하시겠습니까?\n임시 비밀번호가 생성됩니다.")) {
+            const csrfToken = document.querySelector('meta[name="_csrf"]') ? document.querySelector('meta[name="_csrf"]').content : "";
+            const csrfHeader = document.querySelector('meta[name="_csrf_header"]') ? document.querySelector('meta[name="_csrf_header"]').content : "X-CSRF-TOKEN";
+
+            fetch(`/admin/users/${id}/reset-password`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                [csrfHeader]: csrfToken,
+              },
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success) {
+                  alert(`임시 비밀번호: ${data.data}\n\n사용자에게 전달해주세요.`);
+                  window.showToast("비밀번호가 재설정되었습니다", "success");
+                } else {
+                  window.showToast(data.message || "비밀번호 재설정에 실패했습니다", "error");
+                }
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+                window.showToast("비밀번호 재설정 중 오류가 발생했습니다", "error");
+              });
+          }
+        }
+
+        function deleteUser(id, username) {
+          if (confirm(`"${username}" 사용자를 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`)) {
+            const csrfToken = document.querySelector('meta[name="_csrf"]') ? document.querySelector('meta[name="_csrf"]').content : "";
+            const csrfHeader = document.querySelector('meta[name="_csrf_header"]') ? document.querySelector('meta[name="_csrf_header"]').content : "X-CSRF-TOKEN";
+
+            fetch(`/admin/users/${id}`, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                [csrfHeader]: csrfToken,
+              },
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success) {
+                  window.showToast("사용자가 삭제되었습니다", "success");
+                  setTimeout(() => location.reload(), 1500);
+                } else {
+                  window.showToast(data.message || "삭제에 실패했습니다", "error");
+                }
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+                window.showToast("삭제 중 오류가 발생했습니다", "error");
+              });
+          }
+        }
+      </script>
+    </th:block>
+  </body>
+</html>

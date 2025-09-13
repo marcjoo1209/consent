@@ -31,7 +31,7 @@
 
               <!--/* Ho Input */-->
               <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">호수</label>
+                <label class="block text-sm font-medium text-gray-700 mb-1">호</label>
                 <input type="text" name="ho" th:value="${searchRequest.ho}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="예: 1501" />
               </div>
 
@@ -71,15 +71,15 @@
 
             <!--/* Action Buttons */-->
             <div class="flex justify-end gap-3 mt-6">
-              <a href="/admin/consent" class="inline-flex items-center px-6 py-2.5 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition duration-200 font-medium">
+              <a href="/admin/consent" class="inline-flex items-center px-6 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition duration-200 font-medium">
                 <i class="fas fa-redo mr-2"></i>
                 초기화
               </a>
-              <button type="button" onclick="ConsentApp.exportExcel()" class="inline-flex items-center px-6 py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-200 font-medium shadow-sm">
+              <button type="button" onclick="ConsentApp.exportExcel()" class="inline-flex items-center px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-200 font-medium shadow-sm">
                 <i class="fas fa-file-excel mr-2"></i>
                 Excel 다운로드
               </button>
-              <button type="submit" class="inline-flex items-center px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200 font-medium shadow-sm">
+              <button type="submit" class="inline-flex items-center px-6 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition duration-200">
                 <i class="fas fa-search mr-2"></i>
                 검색
               </button>
@@ -90,11 +90,11 @@
         <!--/* Bulk Actions & Statistics */-->
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
           <div class="flex flex-wrap gap-3">
-            <button onclick="ConsentApp.bulkApprove()" id="bulkApproveBtn" disabled class="inline-flex items-center px-5 py-2.5 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200 shadow-sm">
+            <button onclick="ConsentApp.bulkApprove()" id="bulkApproveBtn" disabled class="inline-flex items-center px-5 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200 shadow-sm">
               <i class="fas fa-check-circle mr-2"></i>
               선택 승인
             </button>
-            <button onclick="ConsentApp.bulkReject()" id="bulkRejectBtn" disabled class="inline-flex items-center px-5 py-2.5 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200 shadow-sm">
+            <button onclick="ConsentApp.bulkReject()" id="bulkRejectBtn" disabled class="inline-flex items-center px-5 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition duration-200 shadow-sm">
               <i class="fas fa-times-circle mr-2"></i>
               선택 반려
             </button>
@@ -102,7 +102,7 @@
           <div class="bg-blue-50 border-l-4 border-blue-500 px-4 py-2 rounded">
             <p class="text-blue-800 font-medium">
               총
-              <span th:text="${page.totalElements}" class="text-xl font-bold">0</span>
+              <span th:text="${page.totalElements}" class="font-bold">0</span>
               건의 동의서
             </p>
           </div>

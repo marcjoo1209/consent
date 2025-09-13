@@ -119,8 +119,7 @@ public class ConsentManageService {
 
     @Transactional
     public void rejectConsent(Long id, String reason) {
-        ConsentRecord consent = consentRecordRepository.findById(id)
-                .orElseThrow(() -> new ConsentNotFoundException("동의서를 찾을 수 없습니다. ID: " + id));
+        ConsentRecord consent = consentRecordRepository.findById(id).orElseThrow(() -> new ConsentNotFoundException("동의서를 찾을 수 없습니다. ID: " + id));
 
         consent.setStatus(ConsentStatus.REJECTED);
         consent.setRejectedAt(LocalDateTime.now());

@@ -1,12 +1,9 @@
 package com.ctp.consent.api.v1.dto.res;
 
 import com.ctp.consent.api.v1.dto.BaseDTO;
-import com.ctp.consent.api.v1.dto.model.Attachment;
 import com.ctp.consent.api.v1.dto.model.ConsentRecord;
-import com.ctp.consent.api.v1.dto.model.ConsentPerson;
 import com.ctp.consent.config.enums.ConsentStatus;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -36,54 +33,6 @@ public class ConsentDetailResponse extends BaseDTO {
 
     private List<ParticipantInfo> participants;
     private List<AttachmentInfo> attachments;
-
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class ParticipantInfo {
-        private Long id;
-        private String name;
-        private String phoneNumber;
-        private String birthDate;
-        private String relation;
-        private String signatureUrl;
-
-        public static ParticipantInfo from(ConsentPerson participant) {
-            return ParticipantInfo.builder()
-                    .id(participant.getId())
-                    .name(participant.getName())
-                    .phoneNumber(participant.getPhoneNumber())
-                    .birthDate(participant.getBirthDate())
-                    .relation(participant.getRelation())
-                    .signatureUrl(participant.getSignatureUrl())
-                    .build();
-        }
-    }
-
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class AttachmentInfo {
-        private Long id;
-        private String fileName;
-        private String fileType;
-        private Long fileSize;
-        private String downloadUrl;
-        private LocalDateTime uploadedAt;
-
-        public static AttachmentInfo from(Attachment attachment) {
-            return AttachmentInfo.builder()
-                    .id(attachment.getId())
-                    .fileName(attachment.getOriginalFileName())
-                    .fileType(attachment.getFileType())
-                    .fileSize(attachment.getFileSize())
-                    .downloadUrl("/api/consent/attachment/" + attachment.getId())
-                    .uploadedAt(attachment.getCreatedAt())
-                    .build();
-        }
-    }
 
     public static ConsentDetailResponse from(ConsentRecord consent) {
         ConsentDetailResponse response = new ConsentDetailResponse();

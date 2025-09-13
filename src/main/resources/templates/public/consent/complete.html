@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/public}"
+      th:with="pageApartmentName=${consent?.apart?.aptName ?: '아파트명'}, pageConsentTitle='동의서 제출 완료'">
+  <head>
+    <title>동의서 제출 완료</title>
+  </head>
+  <body>
+    <!--/* Main Content */-->
+    <div layout:fragment="content">
+      <div class="min-h-screen flex items-center justify-center px-4">
+      <div class="max-w-md w-full">
+        <!--/* Success Card */-->
+        <div class="bg-white rounded-lg shadow-lg p-8">
+          <!--/* Success Icon */-->
+          <div class="flex justify-center mb-6">
+            <div class="bg-green-100 rounded-full p-4">
+              <i class="fas fa-check-circle text-green-600 text-5xl"></i>
+            </div>
+          </div>
+
+          <!--/* Title */-->
+          <h1 class="text-2xl font-bold text-center text-gray-900 mb-4">동의서 제출 완료</h1>
+
+          <!--/* Message */-->
+          <p class="text-center text-gray-600 mb-8">
+            개인정보 수집·이용 동의서가
+            <br />
+            성공적으로 제출되었습니다.
+          </p>
+
+          <!--/* Confirmation Details */-->
+          <div class="bg-gray-50 rounded-lg p-6 mb-6">
+            <dl class="space-y-3">
+              <div class="flex justify-between">
+                <dt class="text-sm font-medium text-gray-600">확인 번호</dt>
+                <dd class="text-sm font-bold text-gray-900" th:text="${result.confirmationNumber}">CST202501130001</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-sm font-medium text-gray-600">아파트</dt>
+                <dd class="text-sm text-gray-900" th:text="${result.apartName}">아파트명</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-sm font-medium text-gray-600">동/호</dt>
+                <dd class="text-sm text-gray-900">
+                  <span th:text="${result.building}">101</span>
+                  동
+                  <span th:text="${result.unit}">1501</span>
+                  호
+                </dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-sm font-medium text-gray-600">대표자</dt>
+                <dd class="text-sm text-gray-900" th:text="${result.representativeName}">홍길동</dd>
+              </div>
+              <div class="flex justify-between">
+                <dt class="text-sm font-medium text-gray-600">제출 시간</dt>
+                <dd class="text-sm text-gray-900" th:text="${#temporals.format(result.submittedAt, 'yyyy-MM-dd HH:mm')}">2025-01-13 14:30</dd>
+              </div>
+            </dl>
+          </div>
+
+          <!--/* Important Notice */-->
+          <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <i class="fas fa-info-circle text-blue-500"></i>
+              </div>
+              <div class="ml-3">
+                <p class="text-sm text-blue-800">
+                  확인 번호를 저장해 주세요.
+                  <br />
+                  추후 조회 시 필요합니다.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!--/* Action Buttons */-->
+          <div class="space-y-3">
+            <!--/* Copy Confirmation Number */-->
+            <button type="button" onclick="copyConfirmationNumber()" class="w-full py-3 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition duration-200">
+              <i class="fas fa-copy mr-2"></i>
+              확인 번호 복사
+            </button>
+
+            <!--/* Screenshot Button (Mobile Only) */-->
+            <button type="button" onclick="takeScreenshot()" class="w-full py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition duration-200 md:hidden">
+              <i class="fas fa-camera mr-2"></i>
+              화면 캡처
+            </button>
+
+            <!--/* New Submission */-->
+            <a href="/" class="block w-full py-3 bg-white border-2 border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition duration-200 text-center">
+              <i class="fas fa-home mr-2"></i>
+              처음으로
+            </a>
+          </div>
+        </div>
+
+        <!--/* Footer */-->
+        <div class="mt-6 text-center text-sm text-gray-500">문의사항이 있으시면 관리사무소로 연락주세요.</div>
+      </div>
+      </div>
+
+      <!--/* Toast Notification */-->
+      <div id="toast" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg hidden transition-all duration-300">
+        <span id="toastMessage">메시지</span>
+      </div>
+    </div>
+
+    <!--/* Page-specific Scripts */-->
+    <th:block layout:fragment="script">
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      const confirmationNumber = /*[[${result.confirmationNumber}]]*/ "CST202501130001";
+
+      function copyConfirmationNumber() {
+        // 복사할 텍스트 생성
+        const textToCopy = `동의서 제출 확인\n확인번호: ${confirmationNumber}`;
+
+        // 클립보드에 복사
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard
+            .writeText(textToCopy)
+            .then(() => {
+              showToast("확인 번호가 복사되었습니다.");
+            })
+            .catch(() => {
+              fallbackCopy(textToCopy);
+            });
+        } else {
+          fallbackCopy(textToCopy);
+        }
+      }
+
+      function fallbackCopy(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+          document.execCommand("copy");
+          showToast("확인 번호가 복사되었습니다.");
+        } catch (err) {
+          showToast("복사에 실패했습니다. 수동으로 복사해주세요.");
+        } finally {
+          textArea.remove();
+        }
+      }
+
+      function takeScreenshot() {
+        // Mobile screenshot hint
+        if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+          showToast("전원 버튼과 볼륨 업 버튼을 동시에 누르세요");
+        } else if (/Android/.test(navigator.userAgent)) {
+          showToast("전원 버튼과 볼륨 다운 버튼을 동시에 누르세요");
+        } else {
+          showToast("스크린샷 기능을 사용하세요");
+        }
+      }
+
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        const toastMessage = document.getElementById("toastMessage");
+
+        toastMessage.textContent = message;
+        toast.classList.remove("hidden");
+
+        setTimeout(() => {
+          toast.classList.add("hidden");
+        }, 3000);
+      }
+
+      // Share API (if available)
+      if (navigator.share) {
+        const shareButton = document.createElement("button");
+        shareButton.className = "w-full py-3 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition duration-200";
+        shareButton.innerHTML = '<i class="fas fa-share mr-2"></i>공유하기';
+        shareButton.onclick = async () => {
+          try {
+            await navigator.share({
+              title: "동의서 제출 완료",
+              text: `동의서가 성공적으로 제출되었습니다.\n확인번호: ${confirmationNumber}`,
+            });
+          } catch (err) {
+            console.log("Share failed:", err);
+          }
+        };
+
+        // Add share button before the home button
+        const homeButton = document.querySelector('a[href="/"]');
+        homeButton.parentNode.insertBefore(shareButton, homeButton);
+        const spacer = document.createElement("div");
+        spacer.className = "h-3";
+        homeButton.parentNode.insertBefore(spacer, homeButton);
+      }
+      /*]]>*/
+    </script>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/public}"
+      th:with="pageApartmentName='아파트명', pageConsentTitle='오류 발생'">
+  <head>
+    <title>오류 발생</title>
+  </head>
+  <body>
+    <!--/* Main Content */-->
+    <div layout:fragment="content">
+      <div class="min-h-screen flex items-center justify-center px-4">
+        <div class="max-w-md w-full">
+          <!--/* Error Card */-->
+          <div class="bg-white rounded-lg shadow-lg p-8">
+            <!--/* Error Icon */-->
+            <div class="flex justify-center mb-6">
+              <div class="bg-red-100 rounded-full p-4">
+                <i class="fas fa-exclamation-triangle text-red-600 text-5xl"></i>
+              </div>
+            </div>
+
+            <!--/* Title */-->
+            <h1 class="text-2xl font-bold text-center text-gray-900 mb-4">오류가 발생했습니다</h1>
+
+            <!--/* Error Message */-->
+            <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
+              <p class="text-sm text-red-800" th:text="${error}">요청을 처리하는 중 오류가 발생했습니다.</p>
+            </div>
+
+            <!--/* Common Error Causes */-->
+            <div class="bg-gray-50 rounded-lg p-4 mb-6">
+              <h2 class="font-semibold text-gray-700 mb-2">가능한 원인:</h2>
+              <ul class="text-sm text-gray-600 space-y-1">
+                <li>• 잘못된 접근 경로</li>
+                <li>• 만료된 링크</li>
+                <li>• 이미 제출된 동의서</li>
+                <li>• 네트워크 연결 문제</li>
+              </ul>
+            </div>
+
+            <!--/* Action Buttons */-->
+            <div class="space-y-3">
+              <!--/* Go Back */-->
+              <button type="button" onclick="history.back()" class="w-full py-3 bg-gray-600 text-white font-medium rounded-lg hover:bg-gray-700 transition duration-200">
+                <i class="fas fa-arrow-left mr-2"></i>
+                이전 페이지로
+              </button>
+
+              <!--/* Home */-->
+              <a href="/" class="block w-full py-3 bg-white border-2 border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition duration-200 text-center">
+                <i class="fas fa-home mr-2"></i>
+                처음으로
+              </a>
+            </div>
+          </div>
+
+          <!--/* Footer */-->
+          <div class="mt-6 text-center text-sm text-gray-500">
+            지속적으로 문제가 발생하면
+            <br />
+            관리사무소로 문의해 주세요.
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

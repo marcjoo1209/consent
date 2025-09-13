@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <!--/* Public Footer Fragment */-->
+    <footer th:fragment="footer" class="bg-white border-t border-gray-200 mt-auto">
+      <div class="container mx-auto px-4 py-8">
+        <div class="flex justify-center items-center">
+          <!--/* Law Firm Logo */-->
+          <a th:href="@{/}" class="inline-block">
+            <img th:src="@{/resource/image/logo.svg}" alt="법무법인 태성" class="h-12 w-auto" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <!--/* Fallback text if logo doesn't load */-->
+            <span class="text-gray-600 text-sm font-medium" style="display: none">법무법인 태성</span>
+          </a>
+        </div>
+        <!--/* Optional copyright or additional info */-->
+        <div class="text-center mt-4">
+          <p class="text-xs text-gray-500">
+            &copy; <span th:text="${#dates.year(#dates.createNow())}">2025</span> LAW FIRM TAESUNG. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -407,7 +407,7 @@ templates/
 </head>
 <body>
     <div layout:fragment="content">
-        <div class="container mx-auto px-4 py-8 max-w-7xl">
+        <div class="container mx-auto px-4 py-8 max-w-6xl">
             <!-- Page Header -->
             <div class="mb-8">
                 <h1 class="text-3xl font-bold text-gray-900">페이지 제목</h1>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default}">
+  <body>
+    <div layout:fragment="content">
+      <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!--/* Page Header */-->
+        <div class="mb-8">
+          <h1 class="text-3xl font-bold text-gray-900">내 프로필</h1>
+          <p class="mt-2 text-gray-600">계정 정보를 확인하고 수정할 수 있습니다</p>
+        </div>
+
+        <!--/* Success/Error Messages */-->
+        <div th:if="${message}" class="bg-green-50 border-l-4 border-green-500 p-4 mb-6">
+          <div class="flex items-center">
+            <i class="fas fa-check-circle text-green-500 mr-3"></i>
+            <p class="text-green-800" th:text="${message}"></p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!--/* Profile Info Card */-->
+          <div class="lg:col-span-1">
+            <div class="bg-white rounded-lg shadow-md p-6">
+              <div class="text-center">
+                <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-user text-gray-500 text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900" th:text="${user.name}">사용자명</h3>
+                <p class="text-gray-600" th:text="'@' + ${user.username}">@username</p>
+                <span th:class="${user.role == 'SUPER_ADMIN' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'} + ' inline-block px-3 py-1 text-xs rounded-full mt-2'" th:text="${user.role == 'SUPER_ADMIN' ? '최고 관리자' : '관리자'}">권한</span>
+              </div>
+
+              <div class="mt-6 space-y-4">
+                <div class="flex items-center text-gray-600">
+                  <i class="fas fa-envelope w-5 mr-3"></i>
+                  <span th:text="${user.email}">email@example.com</span>
+                </div>
+                <div th:if="${user.phoneNumber}" class="flex items-center text-gray-600">
+                  <i class="fas fa-phone w-5 mr-3"></i>
+                  <span th:text="${user.phoneNumber}">010-1234-5678</span>
+                </div>
+                <div class="flex items-center text-gray-600">
+                  <i class="fas fa-calendar w-5 mr-3"></i>
+                  <span>가입일:</span>
+                  <span th:text="${#temporals.format(user.createdAt, 'yyyy-MM-dd')}">2024-01-01</span>
+                </div>
+                <div th:if="${user.lastLoginAt}" class="flex items-center text-gray-600">
+                  <i class="fas fa-clock w-5 mr-3"></i>
+                  <span>최근 로그인:</span>
+                  <span th:text="${#temporals.format(user.lastLoginAt, 'MM-dd HH:mm')}">01-01 09:00</span>
+                </div>
+              </div>
+            </div>
+
+            <!--/* Account Status */-->
+            <div class="bg-white rounded-lg shadow-md p-6 mt-6">
+              <h4 class="font-medium text-gray-900 mb-3">계정 상태</h4>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-gray-600">활성 상태</span>
+                <span th:class="${user.active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'} + ' px-2 py-1 text-xs rounded-full'" th:text="${user.active ? '활성' : '비활성'}">활성</span>
+              </div>
+            </div>
+          </div>
+
+          <!--/* Profile Edit Form */-->
+          <div class="lg:col-span-2">
+            <div class="bg-white rounded-lg shadow-md p-6">
+              <h3 class="text-lg font-medium text-gray-900 mb-6">프로필 수정</h3>
+
+              <form th:action="@{/admin/users/profile}" th:object="${user}" method="post" novalidate>
+                <!--/* Global Errors */-->
+                <div th:if="${#fields.hasGlobalErrors()}" class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
+                  <div class="flex items-center">
+                    <i class="fas fa-exclamation-circle text-red-500 mr-3"></i>
+                    <div>
+                      <p class="text-red-800 font-medium">오류가 발생했습니다</p>
+                      <ul class="text-red-700 text-sm mt-1 list-disc list-inside">
+                        <li th:each="error : ${#fields.globalErrors()}" th:text="${error}"></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="space-y-6">
+                  <!--/* Basic Information */-->
+                  <div>
+                    <h4 class="font-medium text-gray-900 mb-4">기본 정보</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <!--/* 이름 */-->
+                      <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">이름</label>
+                        <input type="text" th:field="*{name}" th:classappend="${#fields.hasErrors('name')} ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-opacity-50" />
+                        <p th:if="${#fields.hasErrors('name')}" class="mt-1 text-sm text-red-600" th:errors="*{name}"></p>
+                      </div>
+
+                      <!--/* 이메일 */-->
+                      <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">이메일</label>
+                        <input type="email" th:field="*{email}" th:classappend="${#fields.hasErrors('email')} ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-opacity-50" />
+                        <p th:if="${#fields.hasErrors('email')}" class="mt-1 text-sm text-red-600" th:errors="*{email}"></p>
+                      </div>
+                    </div>
+
+                    <!--/* 전화번호 */-->
+                    <div class="mt-4">
+                      <label class="block text-sm font-medium text-gray-700 mb-1">전화번호</label>
+                      <input type="tel" th:field="*{phoneNumber}" th:classappend="${#fields.hasErrors('phoneNumber')} ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-opacity-50 md:w-1/2" placeholder="010-1234-5678" />
+                      <p th:if="${#fields.hasErrors('phoneNumber')}" class="mt-1 text-sm text-red-600" th:errors="*{phoneNumber}"></p>
+                    </div>
+                  </div>
+
+                  <!--/* Password Change */-->
+                  <div class="border-t pt-6">
+                    <h4 class="font-medium text-gray-900 mb-4">비밀번호 변경</h4>
+                    <p class="text-sm text-gray-600 mb-4">비밀번호를 변경하지 않으려면 아래 필드들을 비워두세요</p>
+
+                    <div class="space-y-4">
+                      <!--/* 현재 비밀번호 */-->
+                      <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">현재 비밀번호</label>
+                        <input type="password" th:field="*{currentPassword}" th:classappend="${#fields.hasErrors('currentPassword')} ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-opacity-50 md:w-1/2" placeholder="현재 비밀번호를 입력하세요" />
+                        <p th:if="${#fields.hasErrors('currentPassword')}" class="mt-1 text-sm text-red-600" th:errors="*{currentPassword}"></p>
+                      </div>
+
+                      <!--/* 새 비밀번호 */-->
+                      <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">새 비밀번호</label>
+                        <input type="password" th:field="*{password}" th:classappend="${#fields.hasErrors('password')} ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-opacity-50 md:w-1/2" placeholder="새 비밀번호 (8자 이상)" />
+                        <p th:if="${#fields.hasErrors('password')}" class="mt-1 text-sm text-red-600" th:errors="*{password}"></p>
+                        <p class="mt-1 text-sm text-gray-500">최소 8자 이상, 영문+숫자+특수문자 조합 권장</p>
+                      </div>
+
+                      <!--/* 새 비밀번호 확인 */-->
+                      <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">새 비밀번호 확인</label>
+                        <input type="password" th:field="*{confirmPassword}" th:classappend="${#fields.hasErrors('confirmPassword')} ? 'border-red-300 focus:border-red-500 focus:ring-red-500' : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-opacity-50 md:w-1/2" placeholder="새 비밀번호를 다시 입력하세요" />
+                        <p th:if="${#fields.hasErrors('confirmPassword')}" class="mt-1 text-sm text-red-600" th:errors="*{confirmPassword}"></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!--/* Action Buttons */-->
+                <div class="mt-8 flex justify-end">
+                  <button type="submit" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                    <i class="fas fa-save mr-2"></i>
+                    변경사항 저장
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!--/* Security Notice */-->
+        <div class="mt-6 bg-yellow-50 border-l-4 border-yellow-500 p-4">
+          <div class="flex items-start">
+            <i class="fas fa-shield-alt text-yellow-500 mt-0.5 mr-3"></i>
+            <div>
+              <p class="text-yellow-800 font-medium">보안 안내</p>
+              <ul class="text-yellow-700 text-sm mt-1 space-y-1">
+                <li>• 비밀번호는 정기적으로 변경하는 것을 권장합니다</li>
+                <li>• 타인과 계정 정보를 공유하지 마세요</li>
+                <li>• 의심스러운 로그인 활동이 있을 경우 즉시 비밀번호를 변경하세요</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--/* Page-specific scripts */-->
+    <th:block layout:fragment="script">
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const currentPasswordField = document.querySelector('input[name="currentPassword"]');
+          const newPasswordField = document.querySelector('input[name="password"]');
+          const confirmPasswordField = document.querySelector('input[name="confirmPassword"]');
+
+          // Password validation
+          if (confirmPasswordField && newPasswordField) {
+            confirmPasswordField.addEventListener("blur", function () {
+              if (newPasswordField.value && confirmPasswordField.value && newPasswordField.value !== confirmPasswordField.value) {
+                confirmPasswordField.setCustomValidity("새 비밀번호가 일치하지 않습니다");
+              } else {
+                confirmPasswordField.setCustomValidity("");
+              }
+            });
+          }
+
+          // Phone number formatting
+          const phoneField = document.querySelector('input[name="phoneNumber"]');
+          if (phoneField) {
+            phoneField.addEventListener("input", function (e) {
+              let value = e.target.value.replace(/[^0-9]/g, "");
+              if (value.length <= 11) {
+                if (value.length > 6) {
+                  value = value.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+                } else if (value.length > 3) {
+                  value = value.replace(/(\d{3})(\d+)/, "$1-$2");
+                }
+              }
+              e.target.value = value;
+            });
+          }
+        });
+      </script>
+    </th:block>
+  </body>
+</html>

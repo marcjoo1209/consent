@@ -35,6 +35,14 @@ public class Admin {
     @Column(nullable = false, length = 50)
     @Comment("관리자 이름")
     private String name;
+    
+    @Column(unique = true, length = 100)
+    @Comment("이메일")
+    private String email;
+    
+    @Column(length = 20)
+    @Comment("전화번호")
+    private String phoneNumber;
 
     @Column(nullable = false, length = 20)
     @Enumerated(EnumType.STRING)

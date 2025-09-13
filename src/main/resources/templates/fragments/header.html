@@ -18,8 +18,9 @@
           <div class="flex items-baseline space-x-4">
             <a th:href="@{/admin/dashboard}" class="text-gray-700 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition">대시보드</a>
             <a th:href="@{/admin/consent}" class="text-gray-700 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition">동의서 관리</a>
+            <a th:href="@{/admin/templates}" class="text-gray-700 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition">템플릿 관리</a>
             <a th:href="@{/admin/aparts}" class="text-gray-700 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition">아파트 관리</a>
-            <a th:href="@{/admin/user}" sec:authorize="hasRole('SUPER_ADMIN')" class="text-gray-700 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition">사용자 관리</a>
+            <a th:href="@{/admin/users}" sec:authorize="hasRole('SUPER_ADMIN')" class="text-gray-700 hover:bg-gray-100 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium transition">사용자 관리</a>
           </div>
         </div>
 
@@ -45,7 +46,7 @@
             <!--/* 드롭다운 메뉴 */-->
             <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-gray-200 focus:outline-none">
               <div class="py-1">
-                <a th:href="@{/admin/profile}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">내 정보</a>
+                <a th:href="@{/admin/users/profile}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">내 정보</a>
                 <a th:href="@{/admin/settings}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">설정</a>
                 <hr class="my-1 border-gray-200" />
                 <form th:action="@{/admin/logout}" method="post">

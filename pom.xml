@@ -15,7 +15,7 @@
     <artifactId>consent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>consent</name>
-    <description>아파트 동의서 관리 시스템</description>
+    <description>법무법인 태성 - 동의서 관리 시스템</description>
 
     <properties>
         <java.version>21</java.version>

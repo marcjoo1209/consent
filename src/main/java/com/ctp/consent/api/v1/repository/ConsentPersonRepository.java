@@ -10,5 +10,5 @@ import java.util.List;
 public interface ConsentPersonRepository extends JpaRepository<ConsentPerson, Long> {
 
     List<ConsentPerson> findByConsentRecordId(Long consentRecordId);
-    List<ConsentPerson> findByConsentRecordIdOrderByOrderIndex(Long consentRecordId);
+    // List<ConsentPerson> findByConsentRecordIdOrderByOrderIndex(Long consentRecordId);
 }

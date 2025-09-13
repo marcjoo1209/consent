@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/default}">
+  <body>
+    <div layout:fragment="content">
+      <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!--/* Page Header */-->
+        <div class="mb-8">
+          <div class="flex items-center justify-between">
+            <div>
+              <h1 class="text-3xl font-bold text-gray-900" th:text="${template.title}">템플릿 제목</h1>
+              <!-- <p class="mt-2 text-gray-600" th:text="${template.description}">템플릿 설명</p> -->
+              <div>
+                <p class="mt-1 text-sm text-gray-900" th:text="'버전 v' + ${template.version}">v1</p>
+              </div>
+            </div>
+            <div class="flex space-x-3">
+              <a href="/admin/templates" class="inline-flex items-center px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition duration-200">
+                <i class="fas fa-arrow-left mr-2"></i>
+                목록으로
+              </a>
+              <a th:href="@{'/admin/templates/' + ${template.id} + '/edit'}" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200">
+                <i class="fas fa-edit mr-2"></i>
+                수정
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!--/* Template Info Card */-->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">템플릿 정보</h2>
+          <dl class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <!-- <div>
+              <dt class="text-sm font-medium text-gray-500">템플릿 ID</dt>
+              <dd class="mt-1 text-sm text-gray-900" th:text="${template.id}">1</dd>
+            </div> -->
+
+            <div>
+              <dt class="text-sm font-medium text-gray-500">상태</dt>
+              <dd class="mt-1">
+                <span th:class="${template.active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}" class="inline-flex px-2 py-1 text-xs font-medium rounded-full">
+                  <span th:text="${template.active ? '활성' : '비활성'}">상태</span>
+                </span>
+              </dd>
+            </div>
+            <div>
+              <dt class="text-sm font-medium text-gray-500">작성자</dt>
+              <dd class="mt-1 text-sm text-gray-900" th:text="${template.createdBy ?: '시스템'}">관리자</dd>
+            </div>
+            <div>
+              <dt class="text-sm font-medium text-gray-500">생성일</dt>
+              <dd class="mt-1 text-sm text-gray-900" th:text="${#temporals.format(template.createdAt, 'yyyy-MM-dd HH:mm')}">2025-01-13 10:00</dd>
+            </div>
+            <div>
+              <dt class="text-sm font-medium text-gray-500">수정일</dt>
+              <dd class="mt-1 text-sm text-gray-900" th:text="${template.updatedAt != null ? #temporals.format(template.updatedAt, 'yyyy-MM-dd HH:mm') : '-'}">2025-01-13 10:00</dd>
+            </div>
+          </dl>
+        </div>
+
+        <!--/* Assigned Apartments */-->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">할당된 아파트</h2>
+          <div th:if="${template.assignedAparts != null and !template.assignedAparts.empty}" class="space-y-3">
+            <div th:each="apart : ${template.assignedAparts}" class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+              <div>
+                <span class="font-medium text-gray-900" th:text="${apart.name}">아파트명</span>
+                <span class="ml-2 text-sm text-gray-500" th:text="'(' + ${apart.code} + ')'">코드</span>
+              </div>
+              <div class="flex items-center space-x-2">
+                <a th:href="@{'/consent/' + ${apart.code} + '/' + ${template.id}}" target="_blank" class="text-blue-600 hover:text-blue-800 text-sm" title="동의서 미리보기">
+                  <i class="fas fa-external-link-alt mr-1"></i>
+                  미리보기
+                </a>
+                <button type="button" class="text-red-600 hover:text-red-800 text-sm" title="할당 해제" th:data-template-id="${template.id}" th:data-apart-id="${apart.id}" th:data-apart-name="${apart.name}" onclick="unassignApartment(this.dataset.templateId, this.dataset.apartId, this.dataset.apartName)">
+                  <i class="fas fa-unlink mr-1"></i>
+                  해제
+                </button>
+              </div>
+            </div>
+          </div>
+          <div th:unless="${template.assignedAparts != null and !template.assignedAparts.empty}" class="text-center py-8 text-gray-500">
+            <i class="fas fa-building text-3xl mb-3"></i>
+            <p>할당된 아파트가 없습니다.</p>
+          </div>
+
+          <!--/* Assign New Apartment */-->
+          <div class="mt-4 pt-4 border-t">
+            <h3 class="text-sm font-medium text-gray-700 mb-3">새 아파트 할당</h3>
+            <div class="flex items-center space-x-3">
+              <select id="apartSelect" class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                <option value="">아파트 선택...</option>
+                <option th:each="apart : ${aparts}" th:unless="${template.assignedApartIds != null and template.assignedApartIds.contains(apart.id)}" th:value="${apart.id}" th:text="${apart.aptName} + ' (' + ${apart.aptCode} + ')'">아파트</option>
+              </select>
+              <button type="button" onclick="assignApartment()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200">
+                <i class="fas fa-plus mr-2"></i>
+                할당
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!--/* Template Content Preview */-->
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">템플릿 내용 미리보기</h2>
+          <div class="border border-gray-200 rounded-lg p-6 bg-gray-50">
+            <div class="prose max-w-none" th:utext="${template.content}">템플릿 내용</div>
+          </div>
+          <div class="mt-4 p-4 bg-blue-50 border-l-4 border-blue-500">
+            <p class="text-sm text-blue-800">
+              <i class="fas fa-info-circle mr-2"></i>
+              변수 표시: {아파트명}, {동}, {호}, {이름} 등의 변수는 실제 동의서 작성 시 자동으로 치환됩니다.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--/* Page-specific scripts */-->
+    <th:block layout:fragment="script">
+      <script th:inline="javascript">
+        /*<![CDATA[*/
+        const templateId = /*[[${template.id}]]*/ 0;
+
+        function assignApartment() {
+          const select = document.getElementById("apartSelect");
+          const apartId = select.value;
+
+          if (!apartId) {
+            alert("아파트를 선택해주세요.");
+            return;
+          }
+
+          fetch(`/admin/templates/${templateId}/assign/${apartId}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRF-TOKEN": document.querySelector('meta[name="_csrf"]')?.content || "",
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.success) {
+                location.reload();
+              } else {
+                alert(data.message || "할당에 실패했습니다.");
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("할당 중 오류가 발생했습니다.");
+            });
+        }
+
+        function unassignApartment(templateId, apartId, apartName) {
+          if (!confirm(`"${apartName}"에서 템플릿 할당을 해제하시겠습니까?`)) {
+            return;
+          }
+
+          fetch(`/admin/templates/${templateId}/unassign/${apartId}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRF-TOKEN": document.querySelector('meta[name="_csrf"]')?.content || "",
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.success) {
+                location.reload();
+              } else {
+                alert(data.message || "할당 해제에 실패했습니다.");
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("할당 해제 중 오류가 발생했습니다.");
+            });
+        }
+
+        function showDeleteModal() {
+          document.getElementById("deleteModal").classList.remove("hidden");
+        }
+
+        function closeDeleteModal() {
+          document.getElementById("deleteModal").classList.add("hidden");
+        }
+        /*]]>*/
+      </script>
+    </th:block>
+  </body>
+</html>

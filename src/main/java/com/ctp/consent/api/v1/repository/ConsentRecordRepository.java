@@ -25,14 +25,14 @@ public interface ConsentRecordRepository extends JpaRepository<ConsentRecord, Lo
     Long countByApartIdAndStatus(Long apartId, ConsentStatus status);
     @Query("SELECT COUNT(cr) FROM ConsentRecord cr WHERE cr.apart.id = :apartId AND cr.status = 'AGREED'")
     Long countAgreedByApartId(@Param("apartId") Long apartId);
-    
+
     Long countByApartId(Long apartId);
     Long countByStatus(ConsentStatus status);
-    
+
     long countByCreatedAtAfter(LocalDateTime dateTime);
     long countByCreatedAtBetween(LocalDateTime start, LocalDateTime end);
     long countByStatusAndCreatedAtBetween(ConsentStatus status, LocalDateTime start, LocalDateTime end);
-    
+
     @Query("SELECT a.id, a.aptName, COUNT(cr), " +
            "SUM(CASE WHEN cr.status = 'APPROVED' THEN 1 ELSE 0 END), " +
            "SUM(CASE WHEN cr.status = 'PENDING' THEN 1 ELSE 0 END), " +

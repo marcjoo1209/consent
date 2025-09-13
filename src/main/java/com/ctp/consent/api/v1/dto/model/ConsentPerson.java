@@ -1,123 +1,51 @@
 package com.ctp.consent.api.v1.dto.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-import org.hibernate.annotations.Comment;
+import jakarta.persistence.*;
+import lombok.*;
 
-import com.ctp.consent.config.enums.PersonRole;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-/**
- * 동의서 참여자(거주자) 정보를 관리하는 엔티티
- * - 한 동의서에 여러 명의 참여자 정보 저장
- * - 각 참여자별 개인정보, 주소, 서명, 첨부파일 관리
- * - 소유자, 공동소유자, 가족 등 역할 구분
- */
 @Entity
-@Table(name = "consent_person")
+@Table(name = "consent_persons")
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ConsentPerson extends BaseEntity {
+public class ConsentPerson {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Comment("참여자 ID")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "consent_record_id", nullable = false)
-    @Comment("동의서")
+    @JoinColumn(name = "submission_id", nullable = false)
+    private ConsentSubmission submission;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "consent_record_id")
     private ConsentRecord consentRecord;
 
-    @Column(nullable = false, length = 100)
-    @Comment("이름")
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    @Column(length = 8)
-    @Comment("생년월일 (YYYYMMDD)")
+    @Column(name = "birth_date", length = 8)
     private String birthDate;
 
-    @Column(nullable = false, length = 50)
-    @Comment("연락처")
+    @Column(name = "phone_number", length = 50)
     private String phoneNumber;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    @Comment("역할")
-    @Builder.Default
-    private PersonRole role = PersonRole.OWNER;
+    @Column(name = "relation", length = 50)
+    private String relation;
 
-    @Comment("순서")
-    @Builder.Default
-    private Integer orderIndex = 1;
-
-    @Embedded
-    @Comment("주소")
-    private Address address;
-
-    @Lob
-    @Column(columnDefinition = "TEXT")
-    @Comment("서명 데이터 (Base64)")
+    @Column(name = "signature_data", columnDefinition = "LONGTEXT")
     private String signatureData;
 
-    @Column
-    @Comment("서명 시간")
-    private LocalDateTime signedAt;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default
-    private List<Attachment> attachments = new ArrayList<>();
-
-    public String getRelation() {
-        return this.role != null ? this.role.getDescription() : "";
-    }
-    
-    public String getSignatureUrl() {
-        return this.signatureData != null ? "/api/consent/signature/" + this.id : null;
-    }
-    
-    public void addAttachment(Attachment attachment) {
-        attachments.add(attachment);
-        attachment.setPerson(this);
-    }
-
-    public void removeAttachment(Attachment attachment) {
-        attachments.remove(attachment);
-        attachment.setPerson(null);
-    }
-
-    public void sign(String signatureData) {
-        this.signatureData = signatureData;
-        this.signedAt = LocalDateTime.now();
-    }
-
-    public boolean isSigned() {
-        return signatureData != null && !signatureData.isEmpty();
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
     }
 }
