@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ctp.consent.api.v1.dto.ApiResponse;
 import com.ctp.consent.api.v1.dto.req.ConsentSearchRequest;
+import com.ctp.consent.api.v1.service.ApartService;
 import com.ctp.consent.api.v1.service.ConsentManageService;
 import com.ctp.consent.config.enums.ConsentStatus;
 
@@ -35,15 +36,18 @@ import lombok.extern.slf4j.Slf4j;
 public class ConsentManageController {
 
     private final ConsentManageService consentManageService;
+    private final ApartService apartService;
 
     @GetMapping
     public String list(@ModelAttribute ConsentSearchRequest searchRequest, @PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
         log.debug("동의서 목록 조회: {}", searchRequest);
         var page = consentManageService.searchConsents(searchRequest, pageable);
+        var apartments = apartService.getAllActiveAparts();
         model.addAttribute("consents", page.getContent());
         model.addAttribute("page", page);
         model.addAttribute("searchRequest", searchRequest);
         model.addAttribute("statuses", ConsentStatus.values());
+        model.addAttribute("apartments", apartments);
         return "admin/consent/list";
     }
 

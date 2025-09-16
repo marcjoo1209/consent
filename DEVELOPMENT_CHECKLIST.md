@@ -156,17 +156,17 @@
 
 ### 📋 2.3 동의서 템플릿 관리 (관리자용)
 
-- [ ] ConsentTemplateController 구현 (관리자용)
-- [ ] ConsentTemplateService 구현
-  - [ ] 템플릿 CRUD 기능
-  - [ ] 템플릿 활성화/비활성화
-  - [ ] 템플릿 복사 기능
-  - [ ] 템플릿-아파트 연결 관리
-- [ ] 동의서 템플릿 관리 페이지 구현
-  - [ ] 템플릿 목록 조회
-  - [ ] 템플릿 생성/수정 폼 (WYSIWYG 에디터)
-  - [ ] 템플릿 미리보기 기능
-  - [ ] 아파트별 템플릿 할당
+- [x] ConsentTemplateController 구현 (관리자용)
+- [x] ConsentTemplateService 구현
+  - [x] 템플릿 CRUD 기능
+  - [x] 템플릿 활성화/비활성화
+  - [x] 템플릿 복사 기능
+  - [x] 템플릿-아파트 연결 관리
+- [x] 동의서 템플릿 관리 페이지 구현
+  - [x] 템플릿 목록 조회
+  - [x] 템플릿 생성/수정 폼 (WYSIWYG 에디터)
+  - [x] 템플릿 미리보기 기능
+  - [x] 아파트별 템플릿 할당
 
 ### 📋 2.4 제출된 동의서 관리
 
@@ -207,24 +207,24 @@
 
 ### 📱 3.1 공개 동의서 작성 페이지 (입주민용)
 
-- [ ] PublicConsentController 구현 (인증 불필요)
-  - [ ] GET /consent/{apartCode}/{templateId} - 동의서 폼 표시
-  - [ ] POST /consent/submit - 동의서 제출 (permitAll)
-  - [ ] GET /consent/verify/{id} - 제출된 동의서 확인
-- [ ] PublicConsentService 구현
-  - [ ] 아파트-템플릿 연결 확인
-  - [ ] 동의서 데이터 저장
+- [x] PublicConsentController 구현 (인증 불필요)
+  - [x] GET /consent/{apartCode}/{templateId} - 동의서 폼 표시
+  - [ ] POST /consent/submit - 동의서 제출 (permitAll) ⚠️ _데이터 적재 미구현_
+  - [x] GET /consent/verify/{id} - 제출된 동의서 확인
+- [x] PublicConsentService 구현
+  - [x] 아파트-템플릿 연결 확인
+  - [ ] 동의서 데이터 저장 ⚠️ _제출 기능 미완성_
   - [ ] 서명 이미지 처리
-- [ ] 모바일 최적화 동의서 작성 페이지
-  - [ ] 아파트 정보 자동 표시
-  - [ ] 동/호수 입력 폼
-  - [ ] 개인정보 입력 폼 (최대 4명)
-  - [ ] 전화번호 자동 포맷팅
+- [x] 모바일 최적화 동의서 작성 페이지
+  - [x] 아파트 정보 자동 표시
+  - [x] 동/호수 입력 폼
+  - [x] 개인정보 입력 폼 (최대 4명)
+  - [x] 전화번호 자동 포맷팅
   - [ ] 주소 입력 (Daum API 연동)
   - [ ] 디지털 서명 패드 (Canvas API)
-  - [ ] 개인정보 동의 체크박스
-- [ ] 실시간 유효성 검증 (JavaScript)
-- [ ] 제출 완료 페이지
+  - [x] 개인정보 동의 체크박스
+- [x] 실시간 유효성 검증 (JavaScript)
+- [x] 제출 완료 페이지
 
 ### 🗂️ 3.2 파일 업로드 시스템
 
@@ -277,11 +277,43 @@
 ### 🎯 완료율
 
 - **Phase 1 (기반 구조)**: 9/10 완료 (90%)
-- **Phase 2 (관리자 기능)**: 4/6 완료 (67%)
-- **Phase 3 (사용자 시스템)**: 0/4 완료
+- **Phase 2 (관리자 기능)**: 5/6 완료 (83%)
+- **Phase 3 (사용자 시스템)**: 1/4 완료 (25%) _일부 미완성_
 - **Phase 4 (API/통합)**: 0/2 완료
 
-**전체 진행률: 57% (13/22 완료)**
+**전체 진행률: 68% (15/22 완료)**
+
+---
+
+## ⚠️ 추후 작업 사항 (Known Issues)
+
+### 🔴 Critical (우선순위 높음)
+1. **동의서 제출 기능 미완성**
+   - 현상: 사용자가 동의서 작성 후 "제출하기" 버튼 클릭 시 데이터가 DB에 저장되지 않음
+   - 위치: `PublicConsentController.submitConsent()` 메소드
+   - 필요 작업: ConsentRecord 엔티티 저장 로직 구현
+
+2. **템플릿 변수 맵핑 문제**
+   - 현상: 템플릿 편집기에서 `insertVariable`로 입력한 변수 ({아파트명}, {동}, {호}, {이름} 등)가 실제 동의서에서 실제 값으로 치환되지 않음
+   - 위치: `src/main/resources/templates/admin/template/form.html`의 insertVariable 함수
+   - 필요 작업: 템플릿 렌더링 시 변수 치환 로직 구현
+
+### 🟡 Medium (기능 개선)
+1. **디지털 서명 기능**
+   - Canvas API를 이용한 서명 패드 구현 필요
+   - Base64 이미지로 변환 후 저장
+
+2. **주소 검색 API 연동**
+   - Daum 우편번호 서비스 API 연동
+   - 주소 자동완성 기능
+
+### 🟢 Low (추가 기능)
+1. **PDF 생성 기능**
+   - 제출된 동의서를 PDF로 다운로드
+   - QR코드 포함
+
+2. **Excel 다운로드**
+   - 제출된 동의서 목록 Excel 파일로 내보내기
 
 ---
 
@@ -315,3 +347,8 @@
   - ValidationUtils: 전화번호, 이메일, 생년월일, 사업자번호 검증
   - BaseDTO, ApiResponse, PageResponse 클래스 생성
   - ValidationGroups 인터페이스 생성 (Create, Update, Delete 등)
+- 2025-09-14: Phase 2.3 (동의서 템플릿 관리), Phase 3.1 (공개 동의서 작성) 완료
+  - 동의서 템플릿 CRUD 기능 완성
+  - 템플릿-아파트 연결 관리 구현
+  - 공개 동의서 작성 페이지 구현
+  - 동의서 조회 기능 구현

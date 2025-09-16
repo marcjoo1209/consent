@@ -27,7 +27,7 @@
         </div>
 
         <!--/* Template Info Card */-->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="bg-white rounded-lg shadow-md p-4 mb-6">
           <h2 class="text-xl font-semibold text-gray-900 mb-4">템플릿 정보</h2>
           <dl class="grid grid-cols-2 md:grid-cols-4 gap-4">
             <!-- <div>
@@ -59,7 +59,7 @@
         </div>
 
         <!--/* Assigned Apartments */-->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="bg-white rounded-lg shadow-md p-4 mb-6">
           <h2 class="text-xl font-semibold text-gray-900 mb-4">할당된 아파트</h2>
           <div th:if="${template.assignedAparts != null and !template.assignedAparts.empty}" class="space-y-3">
             <div th:each="apart : ${template.assignedAparts}" class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -101,7 +101,7 @@
         </div>
 
         <!--/* Template Content Preview */-->
-        <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="bg-white rounded-lg shadow-md p-4">
           <h2 class="text-xl font-semibold text-gray-900 mb-4">템플릿 내용 미리보기</h2>
           <div class="border border-gray-200 rounded-lg p-6 bg-gray-50">
             <div class="prose max-w-none" th:utext="${template.content}">템플릿 내용</div>

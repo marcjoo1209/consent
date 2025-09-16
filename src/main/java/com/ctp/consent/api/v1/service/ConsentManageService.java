@@ -44,75 +44,37 @@ public class ConsentManageService {
         Specification<ConsentRecord> spec = createSpecification(request);
         return consentRecordRepository.findAll(spec, pageable);
     }
-
     private Specification<ConsentRecord> createSpecification(ConsentSearchRequest request) {
         Specification<ConsentRecord> spec = (root, query, criteriaBuilder) -> criteriaBuilder.conjunction();
-
         if (request.getApartmentId() != null) {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("apart").get("id"), request.getApartmentId()));
         }
-
-        if (StringUtils.hasText(request.getDong())) {
-            spec = spec.and((root, query, cb) -> cb.equal(root.get("aptDong"), request.getDong()));
-        }
-
-        if (StringUtils.hasText(request.getHo())) {
-            spec = spec.and((root, query, cb) -> cb.equal(root.get("aptHo"), request.getHo()));
-        }
-
         if (request.getStatus() != null) {
             spec = spec.and((root, query, cb) -> cb.equal(root.get("status"), request.getStatus()));
         }
-
-        if (request.getStartDate() != null) {
-            spec = spec.and((root, query, cb) -> cb.greaterThanOrEqualTo(root.get("createdAt"),
-                    request.getStartDate().atStartOfDay()));
-        }
-
-        if (request.getEndDate() != null) {
-            spec = spec.and((root, query, cb) -> cb.lessThanOrEqualTo(root.get("createdAt"),
-                    request.getEndDate().atTime(23, 59, 59)));
-        }
-
-        if (StringUtils.hasText(request.getKeyword())) {
-            String keyword = "%" + request.getKeyword() + "%";
-            spec = spec.and((root, query, cb) -> cb.or(
-                    cb.like(root.get("aptDong"), keyword),
-                    cb.like(root.get("aptHo"), keyword)));
-        }
-
         if (StringUtils.hasText(request.getParticipantName())) {
             spec = spec.and((root, query, cb) -> {
                 var subquery = query.subquery(Long.class);
                 var participantRoot = subquery.from(ConsentRecord.class);
                 var join = participantRoot.join("persons");
-
-                subquery.select(participantRoot.get("id"))
-                        .where(cb.like(join.get("name"), "%" + request.getParticipantName() + "%"));
-
+                subquery.select(participantRoot.get("id")).where(cb.like(join.get("name"), "%" + request.getParticipantName() + "%"));
                 return cb.in(root.get("id")).value(subquery);
             });
         }
-
         return spec;
     }
 
     public ConsentDetailResponse getConsentDetail(Long id) {
-        ConsentRecord consent = consentRecordRepository.findById(id)
-                .orElseThrow(() -> new ConsentNotFoundException("동의서를 찾을 수 없습니다. ID: " + id));
-
+        ConsentRecord consent = consentRecordRepository.findById(id).orElseThrow(() -> new ConsentNotFoundException("동의서를 찾을 수 없습니다. ID: " + id));
         return ConsentDetailResponse.from(consent);
     }
 
     @Transactional
     public void approveConsent(Long id, String comment) {
-        ConsentRecord consent = consentRecordRepository.findById(id)
-                .orElseThrow(() -> new ConsentNotFoundException("동의서를 찾을 수 없습니다. ID: " + id));
-
+        ConsentRecord consent = consentRecordRepository.findById(id).orElseThrow(() -> new ConsentNotFoundException("동의서를 찾을 수 없습니다. ID: " + id));
         consent.setStatus(ConsentStatus.APPROVED);
         consent.setApprovedAt(LocalDateTime.now());
         consent.setApprovalComment(comment);
-
         consentRecordRepository.save(consent);
         log.info("동의서 승인 완료: {}", id);
     }
@@ -120,11 +82,9 @@ public class ConsentManageService {
     @Transactional
     public void rejectConsent(Long id, String reason) {
         ConsentRecord consent = consentRecordRepository.findById(id).orElseThrow(() -> new ConsentNotFoundException("동의서를 찾을 수 없습니다. ID: " + id));
-
         consent.setStatus(ConsentStatus.REJECTED);
         consent.setRejectedAt(LocalDateTime.now());
         consent.setRejectionReason(reason);
-
         consentRecordRepository.save(consent);
         log.info("동의서 반려 완료: {}", id);
     }

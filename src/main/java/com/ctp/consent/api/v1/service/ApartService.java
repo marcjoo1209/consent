@@ -113,27 +113,21 @@ public class ApartService {
 
     @Transactional
     public void toggleActive(Long id) {
-        Apart apart = apartRepository.findById(id)
-                .orElseThrow(() -> new ConsentNotFoundException("아파트를 찾을 수 없습니다. ID: " + id));
-
+        Apart apart = apartRepository.findById(id).orElseThrow(() -> new ConsentNotFoundException("아파트를 찾을 수 없습니다. ID: " + id));
         apart.setActive(!apart.getActive());
         apartRepository.save(apart);
-
         log.info("아파트 상태 변경: {} -> {}", apart.getAptName(), apart.getActive() ? "활성" : "비활성");
     }
 
     @Transactional
     public void deleteApart(Long id) {
-        Apart apart = apartRepository.findById(id)
-                .orElseThrow(() -> new ConsentNotFoundException("아파트를 찾을 수 없습니다. ID: " + id));
-
+        Apart apart = apartRepository.findById(id).orElseThrow(() -> new ConsentNotFoundException("아파트를 찾을 수 없습니다. ID: " + id));
         apartRepository.delete(apart);
         log.info("아파트 삭제: {}", apart.getAptName());
     }
 
     public Map<String, List<String>> getApartUnits(Long id) {
-        Apart apart = apartRepository.findById(id)
-                .orElseThrow(() -> new ConsentNotFoundException("아파트를 찾을 수 없습니다. ID: " + id));
+        Apart apart = apartRepository.findById(id).orElseThrow(() -> new ConsentNotFoundException("아파트를 찾을 수 없습니다. ID: " + id));
 
         Map<String, List<String>> units = new HashMap<>();
 

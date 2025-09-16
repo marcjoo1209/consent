@@ -70,7 +70,7 @@ public class ConsentRecord extends BaseEntity {
     @Column(nullable = false, length = 20)
     @Comment("상태")
     @Builder.Default
-    private ConsentStatus status = ConsentStatus.DRAFT;
+    private ConsentStatus status = ConsentStatus.ISSUE;
 
     @Column
     @Comment("개인정보 동의")

@@ -39,7 +39,7 @@
         </div>
 
         <!--/* Form */-->
-        <form id="consentForm" class="p-4 pt-12 space-y-6 bg-white" th:action="@{/consent/{apartCode}/{templateId}/submit(apartCode=${apartCode},templateId=${templateId})}" method="post">
+        <form id="consentForm" class="p-4 pt-12 space-y-8 bg-white" th:action="@{/consent/{apartCode}/{templateId}/submit(apartCode=${apartCode},templateId=${templateId})}" method="post">
           <!--/* CSRF Token */-->
           <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
@@ -53,14 +53,16 @@
 
           <!--/* 1. 동의서 내용 */-->
           <div>
-            <h2 class="mb-3 flex items-center">1. 내용</h2>
+            <h2 class="mb-2 flex items-center">1. 내용</h2>
             <!-- max-h-60 overflow-y-auto  -->
-            <div class="bg-gray-50 p-2 rounded-lg text-sm" th:utext="${template.content}">동의서 내용이 여기에 표시됩니다.</div>
+            <div id="templateContent" class="bg-gray-50 p-2 rounded-lg text-sm" th:data-original-content="${template.content}" th:data-apartment-name="${apart.aptName}">
+              <div th:utext="${template.content}">동의서 내용이 여기에 표시됩니다.</div>
+            </div>
           </div>
 
           <!--/* 2. 인적 사항 */-->
           <div>
-            <h2 class="mb-3 flex items-center">2. 인적 사항</h2>
+            <h2 class="mb-2 flex items-center">2. 인적 사항</h2>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">
@@ -105,7 +107,7 @@
 
           <!--/* 4. 추가 가족 정보 */-->
           <!-- <div>
-            <h2 class="mb-3 flex items-center">추가 가족 정보 (선택)</h2>
+            <h2 class="mb-2 flex items-center">추가 가족 정보 (선택)</h2>
             <div id="additionalPersons" class="space-y-3">
             </div>
             <button type="button" onclick="addPerson()" class="w-full py-1 border-2 border-dashed border-gray-300 rounded-sm text-gray-600 hover:border-blue-500 hover:text-blue-500">
@@ -116,7 +118,7 @@
           -->
 
           <!--/* 5. 현재 주소 */-->
-          <!-- <h2 class="mb-3 flex items-center">현재 거주지 주소</h2>
+          <!-- <h2 class="mb-2 flex items-center">현재 거주지 주소</h2>
           <div class="space-y-3">
             <button type="button" onclick="searchAddress()" class="w-full py-1 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200">
               <i class="fas fa-search mr-2"></i>
@@ -127,7 +129,7 @@
 
           <!--/* 6. 개인정보 동의 */-->
           <div>
-            <h2 class="mb-3 flex items-center">개인정보 수집·이용 동의</h2>
+            <h2 class="mb-2 flex items-center">개인정보 수집·이용 동의</h2>
             <div class="space-y-3">
               <label class="flex items-start">
                 <input type="checkbox" name="privacyAgreement" value="true" class="mt-1 mr-3 w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500" required />
@@ -148,7 +150,7 @@
 
           <!--/* 7. 서명 */-->
           <div>
-            <h2 class="mb-3 flex items-center">서명</h2>
+            <h2 class="mb-2 flex items-center">서명</h2>
             <div class="space-y-3 px-4">
               <canvas id="signaturePad" class="signature-pad w-full" height="200"></canvas>
               <input type="hidden" name="signatureData" id="signatureData" />
@@ -186,6 +188,7 @@
         document.addEventListener("DOMContentLoaded", function () {
           initSignaturePad();
           updateProgress();
+          replaceTemplateVariables();
 
           // Add input event listeners for progress update
           document.querySelectorAll("input, textarea").forEach((input) => {
@@ -193,6 +196,29 @@
             input.addEventListener("change", updateProgress);
           });
         });
+
+        // Replace template variables with actual values
+        function replaceTemplateVariables() {
+          const contentDiv = document.getElementById("templateContent");
+          if (!contentDiv) return;
+
+          const apartmentName = contentDiv.dataset.apartmentName;
+          const originalContent = contentDiv.dataset.originalContent;
+
+          if (originalContent && apartmentName) {
+            // {아파트명}을 실제 아파트명으로 치환
+            let replacedContent = originalContent.replace(/{apartName}/g, '<span class="font-semibold">' + apartmentName + "</span>");
+
+            // 동, 호, 이름 변수는 그대로 유지 (나중에 사용자 입력으로 대체될 예정)
+            // 하지만 시각적으로 구분되도록 스타일 적용
+            // replacedContent = replacedContent.replace(/{동}/g, '<span class="text-gray-400">[동]</span>');
+            // replacedContent = replacedContent.replace(/{호}/g, '<span class="text-gray-400">[호]</span>');
+            // replacedContent = replacedContent.replace(/{이름}/g, '<span class="text-gray-400">[이름]</span>');
+
+            // 내용 업데이트
+            contentDiv.innerHTML = "<div>" + replacedContent + "</div>";
+          }
+        }
 
         // Progress calculation
         function updateProgress() {

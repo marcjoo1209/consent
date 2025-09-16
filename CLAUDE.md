@@ -292,7 +292,7 @@ templates/
 ##### 1. Card 컴포넌트
 ```html
 <!-- Basic Card -->
-<div class="bg-white rounded-lg shadow-md p-6">
+<div class="bg-white rounded-lg shadow-md p-4">
     <h3 class="text-xl font-semibold mb-2">Card Title</h3>
     <p class="text-gray-600 mb-4">Card content</p>
 </div>
@@ -306,7 +306,7 @@ templates/
 </div>
 
 <!-- Feature Card with Icon -->
-<div class="bg-white rounded-lg shadow-md p-6">
+<div class="bg-white rounded-lg shadow-md p-4">
     <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
         <i class="fas fa-check text-green-600 text-xl"></i>
     </div>
@@ -414,7 +414,7 @@ templates/
             </div>
 
             <!-- Card Component -->
-            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <div class="bg-white rounded-lg shadow-md p-4 mb-6">
                 <h3 class="text-xl font-semibold mb-4">섹션 제목</h3>
                 <!-- Content -->
             </div>

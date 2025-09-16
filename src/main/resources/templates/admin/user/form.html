@@ -10,7 +10,7 @@
         </div>
 
         <!--/* Form Card */-->
-        <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="bg-white rounded-lg shadow-md p-4">
           <form th:action="${user.id != null ? '/admin/users/' + user.id : '/admin/users'}" th:object="${user}" method="post" novalidate>
             <!--/* Global Errors */-->
             <div th:if="${#fields.hasGlobalErrors()}" class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">

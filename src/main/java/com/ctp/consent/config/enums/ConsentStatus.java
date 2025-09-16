@@ -13,8 +13,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum ConsentStatus {
-    DRAFT("임시저장"),
-    PENDING("대기중"),
+    ISSUE("발행"),
     SUBMITTED("제출됨"),
     APPROVED("승인"),
     AGREED("동의"),

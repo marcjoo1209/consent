@@ -33,7 +33,7 @@
         </div>
 
         <!--/* Template Form */-->
-        <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="bg-white rounded-lg shadow-md p-4">
           <form th:action="${templateId != null ? '/admin/templates/' + templateId + '/edit' : '/admin/templates/new'}" th:object="${template}" method="post" class="space-y-6">
             <!--/* Title Field */-->
             <div>
@@ -71,17 +71,29 @@
                     <i class="fas fa-underline"></i>
                   </button>
                   <div class="w-px h-6 bg-gray-300"></div>
-                  <button type="button" onclick="formatText('insertUnorderedList')" class="px-3 py-1 text-gray-700 hover:bg-gray-200 rounded" title="목록">
-                    <i class="fas fa-list-ul"></i>
+                  <button type="button" onclick="formatText('justifyLeft')" class="px-3 py-1 text-gray-700 hover:bg-gray-200 rounded" title="왼쪽 정렬">
+                    <i class="fas fa-align-left"></i>
                   </button>
-                  <button type="button" onclick="formatText('insertOrderedList')" class="px-3 py-1 text-gray-700 hover:bg-gray-200 rounded" title="번호 목록">
-                    <i class="fas fa-list-ol"></i>
+                  <button type="button" onclick="formatText('justifyCenter')" class="px-3 py-1 text-gray-700 hover:bg-gray-200 rounded" title="가운데 정렬">
+                    <i class="fas fa-align-center"></i>
+                  </button>
+                  <button type="button" onclick="formatText('justifyRight')" class="px-3 py-1 text-gray-700 hover:bg-gray-200 rounded" title="오른쪽 정렬">
+                    <i class="fas fa-align-right"></i>
                   </button>
                   <div class="w-px h-6 bg-gray-300"></div>
                   <button type="button" onclick="insertVariable('apartName')" class="px-3 py-1 bg-blue-100 text-blue-700 hover:bg-blue-200 rounded text-sm">{아파트명}</button>
+                  <!--/* 사용자 입력 필드로 대체되므로 주석 처리
                   <button type="button" onclick="insertVariable('dong')" class="px-3 py-1 bg-blue-100 text-blue-700 hover:bg-blue-200 rounded text-sm">{동}</button>
                   <button type="button" onclick="insertVariable('ho')" class="px-3 py-1 bg-blue-100 text-blue-700 hover:bg-blue-200 rounded text-sm">{호}</button>
                   <button type="button" onclick="insertVariable('name')" class="px-3 py-1 bg-blue-100 text-blue-700 hover:bg-blue-200 rounded text-sm">{이름}</button>
+                  */-->
+                  <div class="w-px h-6 bg-gray-300"></div>
+                  <button type="button" onclick="insertRadioGroup()" class="px-3 py-1 bg-green-100 text-green-700 hover:bg-green-200 rounded text-sm" title="라디오 버튼 추가">
+                    <i class="fas fa-dot-circle mr-1"></i>선택
+                  </button>
+                  <button type="button" onclick="insertCheckbox()" class="px-3 py-1 bg-green-100 text-green-700 hover:bg-green-200 rounded text-sm" title="체크박스 추가">
+                    <i class="fas fa-check-square mr-1"></i>체크
+                  </button>
                 </div>
 
                 <!--/* Content Editor */-->
@@ -148,6 +160,131 @@
           span.contentEditable = "false";
           span.textContent = "{" + variable + "}";
           range.insertNode(span);
+          updateContent();
+        }
+
+        // Insert radio button group
+        function insertRadioGroup() {
+          const groupName = prompt("라디오 그룹 이름을 입력하세요 (예: agreement):");
+          if (!groupName) return;
+
+          const options = prompt("옵션들을 쉼표로 구분하여 입력하세요 (예: 동의,비동의):");
+          if (!options) return;
+
+          const optionArray = options.split(',').map(opt => opt.trim());
+          const editor = document.getElementById("contentEditor");
+
+          // Focus editor and get selection
+          editor.focus();
+          const selection = window.getSelection();
+
+          // If no selection, create one at the end
+          if (!selection.rangeCount) {
+            const range = document.createRange();
+            range.selectNodeContents(editor);
+            range.collapse(false);
+            selection.removeAllRanges();
+            selection.addRange(range);
+          }
+
+          const range = selection.getRangeAt(0);
+
+          const container = document.createElement("div");
+          container.className = "radio-group my-2 p-2 bg-gray-50 rounded border border-gray-200";
+          container.setAttribute("data-group-name", groupName);
+          container.contentEditable = "false";
+
+          optionArray.forEach((option, index) => {
+            const label = document.createElement("label");
+            label.className = "inline-flex items-center mr-4";
+            label.innerHTML = `
+              <input type="radio" name="${groupName}" value="${option}"
+                     class="form-radio text-blue-600" ${index === 0 ? 'checked' : ''}>
+              <span class="ml-2">${option}</span>
+            `;
+            container.appendChild(label);
+          });
+
+          // Ensure we're inserting in the editor
+          if (editor.contains(range.commonAncestorContainer)) {
+            range.insertNode(container);
+          } else {
+            editor.appendChild(container);
+          }
+
+          // Add editable paragraph after the element
+          const editableSpace = document.createElement("p");
+          editableSpace.innerHTML = "<br>";
+          container.parentNode.insertBefore(editableSpace, container.nextSibling);
+
+          // Move cursor to the new editable space
+          const newRange = document.createRange();
+          newRange.selectNodeContents(editableSpace);
+          newRange.collapse(true);
+          selection.removeAllRanges();
+          selection.addRange(newRange);
+
+          updateContent();
+        }
+
+        // Insert checkbox
+        function insertCheckbox() {
+          const checkboxName = prompt("체크박스 이름을 입력하세요 (예: terms):");
+          if (!checkboxName) return;
+
+          const labelText = prompt("체크박스 레이블을 입력하세요 (예: 개인정보 수집 동의):");
+          if (!labelText) return;
+
+          const editor = document.getElementById("contentEditor");
+
+          // Focus editor and get selection
+          editor.focus();
+          const selection = window.getSelection();
+
+          // If no selection, create one at the end
+          if (!selection.rangeCount) {
+            const range = document.createRange();
+            range.selectNodeContents(editor);
+            range.collapse(false);
+            selection.removeAllRanges();
+            selection.addRange(range);
+          }
+
+          const range = selection.getRangeAt(0);
+
+          const container = document.createElement("div");
+          container.className = "checkbox-item my-2 p-2 bg-gray-50 rounded border border-gray-200";
+          container.contentEditable = "false";
+
+          const label = document.createElement("label");
+          label.className = "inline-flex items-center";
+          label.innerHTML = `
+            <input type="checkbox" name="${checkboxName}" value="true"
+                   class="form-checkbox text-blue-600">
+            <span class="ml-2">${labelText}</span>
+          `;
+
+          container.appendChild(label);
+
+          // Ensure we're inserting in the editor
+          if (editor.contains(range.commonAncestorContainer)) {
+            range.insertNode(container);
+          } else {
+            editor.appendChild(container);
+          }
+
+          // Add editable paragraph after the element
+          const editableSpace = document.createElement("p");
+          editableSpace.innerHTML = "<br>";
+          container.parentNode.insertBefore(editableSpace, container.nextSibling);
+
+          // Move cursor to the new editable space
+          const newRange = document.createRange();
+          newRange.selectNodeContents(editableSpace);
+          newRange.collapse(true);
+          selection.removeAllRanges();
+          selection.addRange(newRange);
+
           updateContent();
         }
 

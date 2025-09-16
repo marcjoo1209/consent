@@ -28,8 +28,8 @@
           <div class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow p-6">
             <div class="flex items-center justify-between">
               <div>
-                <p class="text-sm text-gray-500 mb-1">승인 대기</p>
-                <h3 class="text-3xl font-bold" th:text="${statistics.pending}">0</h3>
+                <p class="text-sm text-gray-500 mb-1">발송</p>
+                <h3 class="text-3xl font-bold" th:text="${statistics.submitted}">0</h3>
                 <p class="text-xs text-gray-400 mt-1">처리 필요</p>
               </div>
               <div class="hidden md:flex w-14 h-14 bg-gray-100 rounded-lg items-center justify-center">
@@ -68,7 +68,7 @@
         </div>
 
         <!--/* Quick Actions */-->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <div class="bg-white rounded-lg shadow-md p-4 mb-8">
           <h3 class="text-xl font-semibold mb-4 pb-2">빠른 메뉴</h3>
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
             <a href="/admin/consent" class="flex flex-col items-center p-4 rounded-lg border border-gray-200 hover:shadow-md transition duration-200">

@@ -12,7 +12,9 @@ import lombok.NoArgsConstructor;
 public class DashboardStatisticsDTO {
 
     private long total;
-    private long pending;
+    private long issue;
+    private long submitted;
     private long approve;
+    private long agreed;
     private long reject;
 }

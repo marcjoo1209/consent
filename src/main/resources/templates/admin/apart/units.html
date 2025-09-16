@@ -18,7 +18,7 @@
         </div>
 
         <!--/* Apart Info Card */-->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="bg-white rounded-lg shadow-md p-4 mb-6">
           <h3 class="text-lg font-semibold text-gray-900 mb-4">아파트 정보</h3>
           <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
@@ -41,7 +41,7 @@
         </div>
 
         <!--/* Unit Configuration */-->
-        <div class="bg-white rounded-lg shadow-md p-6">
+        <div class="bg-white rounded-lg shadow-md p-4">
           <h3 class="text-lg font-semibold text-gray-900 mb-4">동별 호수 설정</h3>
 
           <div id="unitConfig" class="space-y-4">
@@ -69,7 +69,7 @@
         </div>
 
         <!--/* Current Units Display */-->
-        <div class="mt-6 bg-white rounded-lg shadow-md p-6" th:if="${units != null and !units.isEmpty()}">
+        <div class="mt-6 bg-white rounded-lg shadow-md p-4" th:if="${units != null and !units.isEmpty()}">
           <h3 class="text-lg font-semibold text-gray-900 mb-4">현재 동/호수 체계</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div th:each="entry : ${units}" class="border rounded-lg p-4">
