@@ -62,4 +62,4 @@ temp/
 node_modules/
 .claude/
 .mcp.json
-.env
+# .env
